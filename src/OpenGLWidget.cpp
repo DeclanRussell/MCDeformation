@@ -8,6 +8,8 @@
 #include <ngl/Random.h>
 #include <ngl/VertexArrayObject.h>
 
+#include "lmesolver.h"
+
 
 //----------------------------------------------------------------------------------------------------------------------
 /// @brief the increment for x/y translation with mouse movement
@@ -76,7 +78,7 @@ void OpenGLWidget::initializeGL(){
     // Now we will create a basic Camera from the graphics library
     // This is a static camera so it only needs to be set once
     // First create Values for the camera position
-    ngl::Vec3 from(0,15,25);
+    ngl::Vec3 from(0,0,25);
     ngl::Vec3 to(0,0,0);
     ngl::Vec3 up(0,1,0);
     m_cam= new ngl::Camera(from,to,up);
@@ -85,10 +87,39 @@ void OpenGLWidget::initializeGL(){
     m_cam->setShape(45,(float)width()/height(),0.5,150);
 
     //create some spheres for testing
-    ngl::Random *rng=ngl::Random::instance();
-    rng->setSeed();
-    for(int i=0; i<20; i++){
-        selectable *sel = new selectable(rng->getRandomVec3()*3);
+//    ngl::Random *rng=ngl::Random::instance();
+//    rng->setSeed();
+//    for(int i=0; i<20; i++){
+//        selectable *sel = new selectable(rng->getRandomVec3()*3);
+//        m_selectables.push_back(sel);
+//    }
+
+    // lets test out our laplacien solver
+    std::vector<ngl::Vec3> square;
+    ngl::Vec3 v1(0.0,0.0,0.0);
+    ngl::Vec3 v2(0.0,1.0,0.0);
+    ngl::Vec3 v3(1.0,1.0,0.0);
+    ngl::Vec3 v4(1.0,0.0,0.0);
+    square.push_back(v1);
+    square.push_back(v2);
+    square.push_back(v3);
+    square.push_back(v4);
+
+
+    for(unsigned int i=0; i<square.size(); i++){
+        selectable *sel = new selectable(square[i]);
+        m_selectables.push_back(sel);
+    }
+
+
+    LMESolver laplaceSolver(square);
+//    laplaceSolver.addHandle(0,1);
+    std::vector<ngl::Vec3> calcPoints = laplaceSolver.calculatePoints();
+
+    std::cout<<"size of calcpoints "<<calcPoints.size()<<std::endl;
+    for(unsigned int i=0; i<calcPoints.size(); i++){
+        selectable *sel = new selectable(calcPoints[i]);
+        sel->setSelected(true);
         m_selectables.push_back(sel);
     }
 
