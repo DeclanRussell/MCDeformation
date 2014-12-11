@@ -163,26 +163,33 @@ void OpenGLWidget::paintGL(){
     if(!m_handlesAdded){
         m_text->renderText(5,5,QString("Please selected your handles and click enter to add them :)"));
     }
+    else{
+        m_text->setColour(0.0,255,0.0);
+        m_text->renderText(5,5,QString("All's good! feel free to select your handles and move them :)"));
+    }
 }
 //----------------------------------------------------------------------------------------------------------------------
 void OpenGLWidget::keyPressEvent(QKeyEvent *_event){
     if(_event->key()==Qt::Key_Return && !m_handlesAdded){
-        std::cout<<"adding hangles"<<std::endl;
+        //only add our handles if something has been selected
         if(m_selected.size()>0){
+            std::cout<<"adding handles"<<std::endl;
             m_handlesAdded = true;
             std::vector<ngl::Vec3> points;
             unsigned int i;
+            //get all our postions of our verts
             for(i=0;i<m_selectables.size();i++){
                 points.push_back(m_selectables[i]->getPos());
+                //remove interactive movement to everything that isnt a handle
                 m_selectables[i]->isSelectable(false);
             }
-            std::cout<<"number of points is "<<points.size()<<std::endl;
 
             m_LMESolver = new LMESolver(points);
             for(i=0; i<m_selected.size();i++){
                 m_LMESolver->addHandle(m_selected[i]->getID(),1.0);
                 m_selected[i]->isSelectable(true);
                 m_selected[i]->setSelected(false);
+                m_selected[i]->isHandle(true);
             }
             m_selected.clear();
         }

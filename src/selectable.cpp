@@ -17,6 +17,7 @@ selectable::selectable(ngl::Vec3 _pos, int _vertexID){
     m_seleted = false;
     m_vertexID = _vertexID;
     m_isSelectable = true;
+    m_isHandle = false;
 }
 //----------------------------------------------------------------------------------------------------------------------
 void selectable::testSelection(int _width, int _height,int _mouseX, int _mouseY, ngl::Mat4 _mouseGlobalTX, ngl::Camera *_cam){
@@ -98,10 +99,12 @@ void selectable::loadMatricesToShader(ngl::Mat4 _mouseGlobalTX, ngl::Camera *_ca
     shader->setShaderParamFromMat4("MVP",MVP);
     shader->setShaderParamFromMat3("normalMatrix",normalMatrix);
     if(m_seleted){
+        //if selected draw it red
         shader->setShaderParam4f("Colour",1,0,0,1);
     }
     else{
-        shader->setShaderParam4f("Colour",1,1,0,1);
+        // if its a handle set it cyan otherwise yellow
+        m_isHandle ? shader->setShaderParam4f("Colour",0,1,1,1) : shader->setShaderParam4f("Colour",1,1,0,1);
     }
 }
 //----------------------------------------------------------------------------------------------------------------------

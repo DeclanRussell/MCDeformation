@@ -112,7 +112,7 @@ std::vector<ngl::Vec3> LMESolver::calculatePoints(){
     if(solver.info()!=Eigen::Success){
         std::cout<<"oh balls it failed"<<std::endl;
     }
-    std::cout<<final<<std::endl;
+    //std::cout<<final<<std::endl;
 
     std::vector<ngl::Vec3> returnPoints;
     returnPoints.resize(final.rows());
