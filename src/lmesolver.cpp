@@ -16,6 +16,10 @@ LMESolver::LMESolver(std::vector<ngl::Vec3> _points){
 void LMESolver::createMatricies(std::vector<ngl::Vec3> _points){
     ngl::Vec3 current,prev,next,delta;
     int prevLoc, nextLoc;
+
+    for(int i=0; i<_points.size();i++){
+        std::cout<<"OG points "<<_points[i].m_x<<","<<_points[i].m_y<<","<<_points[i].m_z<<std::endl;
+    }
     for(unsigned int i=0; i<_points.size();i++){
         //do some bourndary checks
         if(i==0){
@@ -51,7 +55,7 @@ void LMESolver::createMatricies(std::vector<ngl::Vec3> _points){
 //----------------------------------------------------------------------------------------------------------------------
 void LMESolver::addHandle(int _vertex, float _weight){
     //add the handle to our laplace matrix
-    m_laplaceMatrix.conservativeResize(m_laplaceMatrix.rows()+1,m_laplaceMatrix.cols()+1);
+    m_laplaceMatrix.conservativeResize(m_laplaceMatrix.rows()+1,m_laplaceMatrix.cols());
     m_laplaceMatrix.coeffRef(m_laplaceMatrix.rows()-1,_vertex) = _weight;
 
     //add the handle to our delta matrix
@@ -59,33 +63,55 @@ void LMESolver::addHandle(int _vertex, float _weight){
     m_delta.coeffRef(m_delta.rows()-1,0) = m_OGVertex[_vertex].m_x;
     m_delta.coeffRef(m_delta.rows()-1,1) = m_OGVertex[_vertex].m_y;
     m_delta.coeffRef(m_delta.rows()-1,2) = m_OGVertex[_vertex].m_z;
+
+    //add our ID to our id array
+    m_handleID.push_back(_vertex);
+}
+//----------------------------------------------------------------------------------------------------------------------
+void LMESolver::moveHandle(int _handleId, ngl::Vec3 _pos){
+    int handleLoc;
+    //find the location of our handle in our delta matrix
+    for(unsigned int i=0;i<m_handleID.size();i++){
+        if(m_handleID[i]==_handleId){
+            handleLoc=i;
+            continue;
+        }
+    }
+
+    //change the posision of our handle in our delta matrix
+    m_delta.coeffRef(m_OGVertex.size()+handleLoc,0) = _pos.m_x;
+    m_delta.coeffRef(m_OGVertex.size()+handleLoc,1) = _pos.m_y;
+    m_delta.coeffRef(m_OGVertex.size()+handleLoc,2) = _pos.m_z;
+
 }
 
 //----------------------------------------------------------------------------------------------------------------------
 std::vector<ngl::Vec3> LMESolver::calculatePoints(){
 
 
-    Eigen::SimplicialCholesky<Eigen::SparseMatrix<double> > solver;
+//    Eigen::SimplicialCholeskyLDLT<Eigen::SparseMatrix<double> > solver;
+
 
     Eigen::SparseMatrix<double> At(m_laplaceMatrix);
     At.transpose();
     Eigen::SparseMatrix<double> A(m_laplaceMatrix);
     Eigen::SparseMatrix<double> b(m_delta);
-    std::cout<<"A our laplace matrix"<<std::endl;
-    std::cout<<A<<std::endl;
-    std::cout<<"B our delta matrix"<<std::endl;
-    std::cout<<b<<std::endl;
-    std::cout<<"calculated matrix "<<std::endl;
+//    std::cout<<"A our laplace matrix"<<std::endl;
+//    std::cout<<A<<std::endl;
+//    std::cout<<"B our delta matrix"<<std::endl;
+//    std::cout<<b<<std::endl;
+//    std::cout<<"calculated matrix "<<std::endl;
 
     //solve At*A*x = At*b
-    Eigen::SparseMatrix<double> AtA = At * A;
-    solver.compute(AtA);
+    Eigen::SparseMatrix<double> AtA = A.transpose() * A;
+    Eigen::SimplicialCholesky<Eigen::SparseMatrix<double>, Eigen::Upper > solver(AtA);
+
+    Eigen::SparseMatrix<double> Atb = A.transpose()*b;
+
+    Eigen::SparseMatrix<double> final = solver.solve(Atb);
     if(solver.info()!=Eigen::Success){
         std::cout<<"oh balls it failed"<<std::endl;
     }
-    Eigen::SparseMatrix<double> Atb = At*b;
-
-    Eigen::SparseMatrix<double> final = solver.solve(Atb);
     std::cout<<final<<std::endl;
 
     std::vector<ngl::Vec3> returnPoints;

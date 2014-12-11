@@ -11,13 +11,18 @@ selectable::selectable()
     m_seleted = false;
 }
 //----------------------------------------------------------------------------------------------------------------------
-selectable::selectable(ngl::Vec3 _pos){
+selectable::selectable(ngl::Vec3 _pos, int _vertexID){
     m_pos = _pos;
     m_radius = 0.5;
     m_seleted = false;
+    m_vertexID = _vertexID;
+    m_isSelectable = true;
 }
 //----------------------------------------------------------------------------------------------------------------------
 void selectable::testSelection(int _width, int _height,int _mouseX, int _mouseY, ngl::Mat4 _mouseGlobalTX, ngl::Camera *_cam){
+    // if this is not a selectable device then do nothing
+    if(!m_isSelectable)
+        return;
     //calculate our normal device coords
     float x = ((2.0f * _mouseX) / _width) - 1.0f;
     float y = 1.0f -  ((2.0f * _mouseY) / _height);

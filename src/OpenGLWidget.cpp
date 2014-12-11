@@ -8,7 +8,7 @@
 #include <ngl/Random.h>
 #include <ngl/VertexArrayObject.h>
 
-#include "lmesolver.h"
+
 
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -31,6 +31,7 @@ OpenGLWidget::OpenGLWidget(const QGLFormat _format, QWidget *_parent) : QGLWidge
     m_spinXFace=0;
     m_spinYFace=0;
     m_modelPos=ngl::Vec3(0.0);
+    m_handlesAdded=false;
     // re-size the widget to that of the parent (in this case the GLFrame passed in on construction)
     this->resize(_parent->size());
 }
@@ -105,23 +106,21 @@ void OpenGLWidget::initializeGL(){
     square.push_back(v3);
     square.push_back(v4);
 
-
-    for(unsigned int i=0; i<square.size(); i++){
-        selectable *sel = new selectable(square[i]);
+    //lets make a circle
+    ngl::Vec3 radius(0,5,0);
+    ngl::Mat4 rot;
+    ngl::Vec3 pos;
+    for(unsigned int i=0; i<36; i++){
+        rot.rotateZ(10*i);
+        pos=rot*radius;
+        selectable *sel = new selectable(pos,i);
         m_selectables.push_back(sel);
     }
 
-
-    LMESolver laplaceSolver(square);
-//    laplaceSolver.addHandle(0,1);
-    std::vector<ngl::Vec3> calcPoints = laplaceSolver.calculatePoints();
-
-    std::cout<<"size of calcpoints "<<calcPoints.size()<<std::endl;
-    for(unsigned int i=0; i<calcPoints.size(); i++){
-        selectable *sel = new selectable(calcPoints[i]);
-        sel->setSelected(true);
-        m_selectables.push_back(sel);
-    }
+    // create our text renderer
+    m_text = new ngl::Text(QFont("Arial",14));
+    m_text->setColour(255,0,0);
+    m_text->setScreenSize(width(),height());
 
     startTimer(0);
 
@@ -161,24 +160,78 @@ void OpenGLWidget::paintGL(){
     for(unsigned int i=0; i<m_selectables.size(); i++){
         m_selectables[i]->draw(m_mouseGlobalTX,m_cam);
     }
+    if(!m_handlesAdded){
+        m_text->renderText(5,5,QString("Please selected your handles and click enter to add them :)"));
+    }
 }
+//----------------------------------------------------------------------------------------------------------------------
+void OpenGLWidget::keyPressEvent(QKeyEvent *_event){
+    if(_event->key()==Qt::Key_Return && !m_handlesAdded){
+        std::cout<<"adding hangles"<<std::endl;
+        if(m_selected.size()>0){
+            m_handlesAdded = true;
+            std::vector<ngl::Vec3> points;
+            unsigned int i;
+            for(i=0;i<m_selectables.size();i++){
+                points.push_back(m_selectables[i]->getPos());
+                m_selectables[i]->isSelectable(false);
+            }
+            std::cout<<"number of points is "<<points.size()<<std::endl;
+
+            m_LMESolver = new LMESolver(points);
+            for(i=0; i<m_selected.size();i++){
+                m_LMESolver->addHandle(m_selected[i]->getID(),1.0);
+                m_selected[i]->isSelectable(true);
+                m_selected[i]->setSelected(false);
+            }
+            m_selected.clear();
+        }
+    }
+}
+
 //----------------------------------------------------------------------------------------------------------------------
 void OpenGLWidget::mouseMoveEvent (QMouseEvent * _event)
 {
   // note the method buttons() is the button state when event was called
   // this is different from button() which is used to check which button was
   // pressed when the mousePress/Release event is generated
-  if(m_rotate && _event->buttons() == Qt::LeftButton)
+  if(m_movePoint && _event->buttons() == Qt::LeftButton)
   {
     int diffx=_event->x()-m_origX;
     int diffy=_event->y()-m_origY;
-    m_spinXFace += (float) 0.5f * diffy;
-    m_spinYFace += (float) 0.5f * diffx;
-    m_origX = _event->x();
-    m_origY = _event->y();
-
+    ngl::Vec3 diff(diffx,diffy * -1.0,0.0);
+    diff.normalize();
+    diff*=0.1;
+    if(m_selected.size()>0){
+        if(m_handlesAdded){
+            ngl::Vec3 newPos;
+            for(unsigned int i=0;i<m_selected.size();i++){
+                newPos = m_selected[i]->getPos()+diff;
+                m_LMESolver->moveHandle(m_selected[i]->getID(),newPos);
+            }
+            std::vector<ngl::Vec3> newVerts = m_LMESolver->calculatePoints();
+            for(unsigned int i=0;i<m_selectables.size();i++){
+                m_selectables[i]->setPos(newVerts[i]);
+            }
+        }
+        else{
+            for(unsigned int i=0;i<m_selected.size();i++){
+                m_selected[i]->move(diff);
+            }
+        }
+        m_origX = _event->x();
+        m_origY = _event->y();
+    }
   }
-        // right mouse translate code
+  else if(m_rotate && _event->buttons() == Qt::MiddleButton){
+      int diffx=_event->x()-m_origX;
+      int diffy=_event->y()-m_origY;
+      m_spinXFace += (float) 0.5f * diffy;
+      m_spinYFace += (float) 0.5f * diffx;
+      m_origX = _event->x();
+      m_origY = _event->y();
+  }
+   // right mouse translate code
   else if(m_translate && _event->buttons() == Qt::RightButton)
   {
     int diffX = (int)(_event->x() - m_origXPos);
@@ -195,11 +248,16 @@ void OpenGLWidget::mousePressEvent ( QMouseEvent * _event)
 {
   // this method is called when the mouse button is pressed in this case we
   // store the value where the maouse was clicked (x,y) and set the Rotate flag to true
-  if(_event->button() == Qt::LeftButton)
+  if(_event->button() == Qt::MiddleButton)
   {
     m_origX = _event->x();
     m_origY = _event->y();
     m_rotate =true;
+  }
+  else if(_event->button() == Qt::LeftButton){
+      m_origX = _event->x();
+      m_origY = _event->y();
+      m_movePoint = true;
   }
   // right mouse translate mode
   else if(_event->button() == Qt::RightButton)
@@ -209,8 +267,11 @@ void OpenGLWidget::mousePressEvent ( QMouseEvent * _event)
     m_translate=true;
   }
 
+  m_selected.clear();
   for(int i=0; i<m_selectables.size();i++){
       m_selectables[i]->testSelection(width(),height(),_event->x(),_event->y(),m_mouseGlobalTX, m_cam);
+      if(m_selectables[i]->isSelected())
+          m_selected.push_back(m_selectables[i]);
   }
 
 
