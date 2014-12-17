@@ -1,0 +1,31 @@
+<map id="OpenMesh/Tools/Kernel_OSG/bindT.hh" name="OpenMesh/Tools/Kernel_OSG/bindT.hh">
+<area shape="rect" id="node7" href="$a00487_source.html" title="OpenMesh/Core/Mesh\l/TriMeshT.hh" alt="" coords="787,110,939,165"/>
+<area shape="rect" id="node141" href="$a00501_source.html" title="OpenMesh/Core/Utils\l/color_cast.hh" alt="" coords="331,1025,477,1079"/>
+<area shape="rect" id="node152" href="$a00576_source.html" title="OpenMesh/Tools/Utils\l/GLConstAsString.hh" alt="" coords="440,110,589,165"/>
+<area shape="rect" id="node159" href="$a00502_source.html" title="color_cast.hh" alt="" coords="157,942,256,975"/>
+<area shape="rect" id="node11" href="$a00478_source.html" title="OpenMesh/Core/Mesh\l/PolyMeshT.hh" alt="" coords="939,214,1091,269"/>
+<area shape="rect" id="node14" href="$a00401_source.html" title="OpenMesh/Core/Geometry\l/MathDefs.hh" alt="" coords="773,318,952,373"/>
+<area shape="rect" id="node20" href="$a00475_source.html" title="OpenMesh/Core/Mesh\l/PolyConnectivity.hh" alt="" coords="2212,318,2364,373"/>
+<area shape="rect" id="node128" href="$a00467_source.html" title="OpenMesh/Core/Mesh\l/FinalMeshItemsT.hh" alt="" coords="901,1129,1053,1183"/>
+<area shape="rect" id="node22" href="$a00457_source.html" title="OpenMesh/Core/Mesh\l/ArrayKernel.hh" alt="" coords="1756,422,1908,477"/>
+<area shape="rect" id="node113" href="$a00473_source.html" title="OpenMesh/Core/Mesh\l/IteratorsT.hh" alt="" coords="3368,1025,3520,1079"/>
+<area shape="rect" id="node122" href="$a00466_source.html" title="OpenMesh/Core/Mesh\l/CirculatorsT.hh" alt="" coords="3544,1025,3696,1079"/>
+<area shape="rect" id="node27" href="$a00505_source.html" title="OpenMesh/Core/Utils\l/GenProg.hh" alt="" coords="1017,1337,1164,1391"/>
+<area shape="rect" id="node30" href="$a00455_source.html" title="OpenMesh/Core/Mesh\l/ArrayItems.hh" alt="" coords="1381,1233,1533,1287"/>
+<area shape="rect" id="node39" href="$a00463_source.html" title="OpenMesh/Core/Mesh\l/BaseKernel.hh" alt="" coords="1893,526,2045,581"/>
+<area shape="rect" id="node83" href="$a00479_source.html" title="OpenMesh/Core/Mesh\l/Status.hh" alt="" coords="2736,1129,2888,1183"/>
+<area shape="rect" id="node34" href="$a00472_source.html" title="OpenMesh/Core/Mesh\l/Handles.hh" alt="" coords="1331,1337,1483,1391"/>
+<area shape="rect" id="node46" href="$a00508_source.html" title="OpenMesh/Core/Utils\l/PropertyContainer.hh" alt="" coords="1920,630,2067,685"/>
+<area shape="rect" id="node48" href="$a00507_source.html" title="OpenMesh/Core/Utils\l/Property.hh" alt="" coords="1920,734,2067,789"/>
+<area shape="rect" id="node52" href="$a00500_source.html" title="OpenMesh/Core/Utils\l/BaseProperty.hh" alt="" coords="2725,838,2872,893"/>
+<area shape="rect" id="node55" href="$a00440_source.html" title="OpenMesh/Core/IO/StoreRestore.hh" alt="" coords="1999,942,2233,975"/>
+<area shape="rect" id="node94" href="$a00492.html" title="This file provides the streams omlog, omout, and omerr. " alt="" coords="2723,1233,2888,1287"/>
+<area shape="rect" id="node60" href="$a00435_source.html" title="OpenMesh/Core/IO/SR\l_binary.hh" alt="" coords="2037,1129,2195,1183"/>
+<area shape="rect" id="node70" href="$a00436_source.html" title="OpenMesh/Core/IO/SR\l_binary_spec.hh" alt="" coords="2221,1025,2379,1079"/>
+<area shape="rect" id="node81" href="$a00406_source.html" title="OpenMesh/Core/Geometry\l/VectorT.hh" alt="" coords="1128,1233,1307,1287"/>
+<area shape="rect" id="node86" href="$a00439_source.html" title="OpenMesh/Core/IO/SR\l_types.hh" alt="" coords="2440,1233,2597,1287"/>
+<area shape="rect" id="node89" href="$a00437_source.html" title="OpenMesh/Core/IO/SR\l_rbo.hh" alt="" coords="2273,1129,2431,1183"/>
+<area shape="rect" id="node96" href="$a00490_source.html" title="OpenMesh/Core/System\l/mostream.hh" alt="" coords="2723,1337,2888,1391"/>
+<area shape="rect" id="node132" href="$a00515_source.html" title="OpenMesh/Core/Utils\l/vector_traits.hh" alt="" coords="603,1233,749,1287"/>
+<area shape="rect" id="node144" href="$a00514_source.html" title="OpenMesh/Core/Utils\l/vector_cast.hh" alt="" coords="552,1129,699,1183"/>
+</map>

@@ -1,0 +1,20 @@
+<map id="OpenMesh/Tools/Subdivider/Uniform/LoopT.hh" name="OpenMesh/Tools/Subdivider/Uniform/LoopT.hh">
+<area shape="rect" id="node3" href="$a00489_source.html" title="OpenMesh/Core/System\l/config.hh" alt="" coords="143,214,308,269"/>
+<area shape="rect" id="node7" href="$a00573.html" title="OpenMesh/Tools/Subdivider\l/Uniform/SubdividerT.hh" alt="" coords="133,110,317,165"/>
+<area shape="rect" id="node13" href="$a00514_source.html" title="OpenMesh/Core/Utils\l/vector_cast.hh" alt="" coords="405,526,552,581"/>
+<area shape="rect" id="node31" href="$a00507_source.html" title="OpenMesh/Core/Utils\l/Property.hh" alt="" coords="871,110,1017,165"/>
+<area shape="rect" id="node10" href="$a00506_source.html" title="OpenMesh/Core/Utils\l/Noncopyable.hh" alt="" coords="32,318,179,373"/>
+<area shape="rect" id="node16" href="$a00515_source.html" title="OpenMesh/Core/Utils\l/vector_traits.hh" alt="" coords="355,630,501,685"/>
+<area shape="rect" id="node19" href="$a00505_source.html" title="OpenMesh/Core/Utils\l/GenProg.hh" alt="" coords="488,734,635,789"/>
+<area shape="rect" id="node29" href="$a00406_source.html" title="OpenMesh/Core/Geometry\l/VectorT.hh" alt="" coords="677,630,856,685"/>
+<area shape="rect" id="node34" href="$a00472_source.html" title="OpenMesh/Core/Mesh\l/Handles.hh" alt="" coords="27,734,179,789"/>
+<area shape="rect" id="node38" href="$a00500_source.html" title="OpenMesh/Core/Utils\l/BaseProperty.hh" alt="" coords="1520,214,1667,269"/>
+<area shape="rect" id="node42" href="$a00440_source.html" title="OpenMesh/Core/IO/StoreRestore.hh" alt="" coords="1560,329,1795,362"/>
+<area shape="rect" id="node83" href="$a00492.html" title="This file provides the streams omlog, omout, and omerr. " alt="" coords="1496,630,1661,685"/>
+<area shape="rect" id="node47" href="$a00435_source.html" title="OpenMesh/Core/IO/SR\l_binary.hh" alt="" coords="1829,526,1987,581"/>
+<area shape="rect" id="node57" href="$a00436_source.html" title="OpenMesh/Core/IO/SR\l_binary_spec.hh" alt="" coords="1599,422,1756,477"/>
+<area shape="rect" id="node70" href="$a00479_source.html" title="OpenMesh/Core/Mesh\l/Status.hh" alt="" coords="1083,734,1235,789"/>
+<area shape="rect" id="node73" href="$a00439_source.html" title="OpenMesh/Core/IO/SR\l_types.hh" alt="" coords="1133,630,1291,685"/>
+<area shape="rect" id="node76" href="$a00437_source.html" title="OpenMesh/Core/IO/SR\l_rbo.hh" alt="" coords="1315,526,1472,581"/>
+<area shape="rect" id="node85" href="$a00490_source.html" title="OpenMesh/Core/System\l/mostream.hh" alt="" coords="1496,734,1661,789"/>
+</map>

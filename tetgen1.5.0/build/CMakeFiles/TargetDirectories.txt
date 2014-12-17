@@ -1,0 +1,2 @@
+/home/dexternation/Downloads/tetgen1.5.0/build/CMakeFiles/tet.dir
+/home/dexternation/Downloads/tetgen1.5.0/build/CMakeFiles/tetgen.dir

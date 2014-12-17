@@ -1,0 +1,25 @@
+<map id="OpenMesh/Tools/Decimater/CollapseInfoT.hh" name="OpenMesh/Tools/Decimater/CollapseInfoT.hh">
+<area shape="rect" id="node3" href="$a00528.html" title="Base class for all decimation modules. " alt="" coords="1213,110,1397,165"/>
+<area shape="rect" id="node5" href="$a00518.html" title="OpenMesh/Tools/Decimater\l/BaseDecimaterT.hh" alt="" coords="317,214,501,269"/>
+<area shape="rect" id="node22" href="$a00527.html" title="OpenMesh/Tools/Decimater\l/ModAspectRatioT.hh" alt="" coords="525,214,709,269"/>
+<area shape="rect" id="node26" href="$a00530.html" title="OpenMesh/Tools/Decimater\l/ModEdgeLengthT.hh" alt="" coords="733,214,917,269"/>
+<area shape="rect" id="node30" href="$a00532.html" title="OpenMesh/Tools/Decimater\l/ModHausdorffT.hh" alt="" coords="941,214,1125,269"/>
+<area shape="rect" id="node34" href="$a00534.html" title="OpenMesh/Tools/Decimater\l/ModNormalDeviationT.hh" alt="" coords="1149,214,1333,269"/>
+<area shape="rect" id="node36" href="$a00535.html" title="OpenMesh/Tools/Decimater\l/ModNormalFlippingT.hh" alt="" coords="1149,318,1333,373"/>
+<area shape="rect" id="node39" href="$a00539.html" title="OpenMesh/Tools/Decimater\l/ModQuadricT.hh" alt="" coords="1408,214,1592,269"/>
+<area shape="rect" id="node44" href="$a00537.html" title="OpenMesh/Tools/Decimater\l/ModProgMeshT.hh" alt="" coords="1616,214,1800,269"/>
+<area shape="rect" id="node48" href="$a00533_source.html" title="OpenMesh/Tools/Decimater\l/ModIndependentSetsT.hh" alt="" coords="1824,214,2008,269"/>
+<area shape="rect" id="node50" href="$a00540.html" title="OpenMesh/Tools/Decimater\l/ModRoundnessT.hh" alt="" coords="2032,214,2216,269"/>
+<area shape="rect" id="node7" href="$a00521.html" title="OpenMesh/Tools/Decimater\l/DecimaterT.hh" alt="" coords="317,318,501,373"/>
+<area shape="rect" id="node17" href="$a00523.html" title="OpenMesh/Tools/Decimater\l/McDecimaterT.hh" alt="" coords="109,318,293,373"/>
+<area shape="rect" id="node9" href="$a00375_source.html" title="OpenMesh/Apps/Decimating\l/DecimaterViewerWidget.hh" alt="" coords="1147,422,1336,477"/>
+<area shape="rect" id="node11" href="$a00520.html" title="OpenMesh/Tools/Decimater\l/DecimaterT.cc" alt="" coords="421,422,605,477"/>
+<area shape="rect" id="node13" href="$a00525_source.html" title="OpenMesh/Tools/Decimater\l/MixedDecimaterT.hh" alt="" coords="213,422,397,477"/>
+<area shape="rect" id="node15" href="$a00524.html" title="OpenMesh/Tools/Decimater\l/MixedDecimaterT.cc" alt="" coords="213,526,397,581"/>
+<area shape="rect" id="node19" href="$a00522.html" title="OpenMesh/Tools/Decimater\l/McDecimaterT.cc" alt="" coords="5,422,189,477"/>
+<area shape="rect" id="node24" href="$a00526.html" title="OpenMesh/Tools/Decimater\l/ModAspectRatioT.cc" alt="" coords="525,318,709,373"/>
+<area shape="rect" id="node28" href="$a00529.html" title="OpenMesh/Tools/Decimater\l/ModEdgeLengthT.cc" alt="" coords="733,318,917,373"/>
+<area shape="rect" id="node32" href="$a00531.html" title="OpenMesh/Tools/Decimater\l/ModHausdorffT.cc" alt="" coords="941,318,1125,373"/>
+<area shape="rect" id="node42" href="$a00538.html" title="Bodies of template member function. " alt="" coords="1357,318,1541,373"/>
+<area shape="rect" id="node46" href="$a00536.html" title="OpenMesh/Tools/Decimater\l/ModProgMeshT.cc" alt="" coords="1616,318,1800,373"/>
+</map>

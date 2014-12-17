@@ -1,0 +1,36 @@
+<map id="OpenMesh/Core/Mesh/Attributes.hh" name="OpenMesh/Core/Mesh/Attributes.hh">
+<area shape="rect" id="node3" href="$a00413_source.html" title="OpenMesh/Core/IO/importer\l/ImporterT.hh" alt="" coords="1215,110,1401,165"/>
+<area shape="rect" id="node9" href="$a00385_source.html" title="OpenMesh/Apps/QtViewer\l/MeshViewerWidgetT.hh" alt="" coords="563,318,739,373"/>
+<area shape="rect" id="node12" href="$a00380_source.html" title="OpenMesh/Apps/ProgViewer\l/ProgViewerWidget.hh" alt="" coords="5,433,195,487"/>
+<area shape="rect" id="node28" href="$a00480.html" title="This file defines the default traits and some convenience macros. " alt="" coords="1687,214,1839,269"/>
+<area shape="rect" id="node59" href="$a00560.html" title="Mesh traits for uniform composite subdivision. " alt="" coords="2264,318,2520,373"/>
+<area shape="rect" id="node74" href="$a00459_source.html" title="OpenMesh/Core/Mesh\l/AttribKernelT.hh" alt="" coords="1476,214,1628,269"/>
+<area shape="rect" id="node81" href="$a00464_source.html" title="OpenMesh/Core/Mesh\l/BaseMesh.hh" alt="" coords="2148,110,2300,165"/>
+<area shape="rect" id="node83" href="$a00460_source.html" title="OpenMesh/Tools/Kernel\l_OSG/AttribKernelT.hh" alt="" coords="2544,318,2704,373"/>
+<area shape="rect" id="node88" href="$a00545_source.html" title="OpenMesh/Tools/Kernel\l_OSG/PropertyT.hh" alt="" coords="1964,110,2124,165"/>
+<area shape="rect" id="node94" href="$a00581_source.html" title="OpenMesh/Tools/Utils\l/MeshCheckerT.hh" alt="" coords="2324,110,2473,165"/>
+<area shape="rect" id="node5" href="$a00417_source.html" title="OpenMesh/Core/IO/MeshIO.hh" alt="" coords="971,225,1173,258"/>
+<area shape="rect" id="node7" href="$a00375_source.html" title="OpenMesh/Apps/Decimating\l/DecimaterViewerWidget.hh" alt="" coords="219,433,408,487"/>
+<area shape="rect" id="node16" href="$a00383_source.html" title="OpenMesh/Apps/Subdivider\l/MeshViewerWidget.hh" alt="" coords="901,433,1085,487"/>
+<area shape="rect" id="node20" href="$a00397_source.html" title="OpenMesh/Apps/VDProgMesh\l/Synthesizer/VDPMSynthesizerViewer\lWidget.hh" alt="" coords="632,422,877,498"/>
+<area shape="rect" id="node24" href="$a00562.html" title="OpenMesh/Tools/Subdivider\l/Adaptive/Composite/RulesT.cc" alt="" coords="1217,651,1423,706"/>
+<area shape="rect" id="node26" href="$a00604_source.html" title="Unittests/unittests\l_common.hh" alt="" coords="1336,433,1464,487"/>
+<area shape="rect" id="node14" href="$a00382_source.html" title="OpenMesh/Apps/QtViewer\l/MeshViewerWidget.hh" alt="" coords="432,433,608,487"/>
+<area shape="rect" id="node18" href="$a00392_source.html" title="OpenMesh/Apps/Subdivider\l/SubdivideWidget.hh" alt="" coords="901,547,1085,602"/>
+<area shape="rect" id="node30" href="$a00476_source.html" title="OpenMesh/Core/Mesh\l/PolyMesh_ArrayKernelT.hh" alt="" coords="1460,318,1644,373"/>
+<area shape="rect" id="node37" href="$a00485_source.html" title="OpenMesh/Core/Mesh\l/TriMesh_ArrayKernelT.hh" alt="" coords="864,318,1035,373"/>
+<area shape="rect" id="node47" href="$a00559.html" title="Mesh traits for adaptive composite subdivider. " alt="" coords="1677,318,1939,373"/>
+<area shape="rect" id="node66" href="$a00588_source.html" title="OpenMesh/Tools/VDPM\l/MeshTraits.hh" alt="" coords="1256,318,1419,373"/>
+<area shape="rect" id="node69" href="$a00481.html" title="This file defines the default traits and some convenienve macros. " alt="" coords="2007,318,2167,373"/>
+<area shape="rect" id="node71" href="$a00546_source.html" title="OpenMesh/Tools/Kernel\l_OSG/TriMesh_OSGArrayKernelT.hh" alt="" coords="2161,547,2399,602"/>
+<area shape="rect" id="node32" href="$a00541_source.html" title="OpenMesh/Tools/Dualizer\l/meshDualT.hh" alt="" coords="1488,433,1659,487"/>
+<area shape="rect" id="node34" href="$a00465_source.html" title="OpenMesh/Core/Mesh\l/Casts.hh" alt="" coords="1160,433,1312,487"/>
+<area shape="rect" id="node49" href="$a00557.html" title="OpenMesh/Tools/Subdivider\l/Adaptive/Composite/CompositeT.hh" alt="" coords="1957,433,2192,487"/>
+<area shape="rect" id="node53" href="$a00561_source.html" title="OpenMesh/Tools/Subdivider\l/Adaptive/Composite/RuleInterfaceT.hh" alt="" coords="1683,433,1933,487"/>
+<area shape="rect" id="node51" href="$a00555.html" title="OpenMesh/Tools/Subdivider\l/Adaptive/Composite/CompositeT.cc" alt="" coords="1796,547,2031,602"/>
+<area shape="rect" id="node55" href="$a00563.html" title="OpenMesh/Tools/Subdivider\l/Adaptive/Composite/RulesT.hh" alt="" coords="1416,547,1621,602"/>
+<area shape="rect" id="node62" href="$a00567.html" title="OpenMesh/Tools/Subdivider\l/Uniform/CompositeSqrt3T.hh" alt="" coords="2317,433,2512,487"/>
+<area shape="rect" id="node64" href="$a00566.html" title="OpenMesh/Tools/Subdivider\l/Uniform/CompositeLoopT.hh" alt="" coords="2536,433,2728,487"/>
+<area shape="rect" id="node85" href="$a00542_source.html" title="OpenMesh/Tools/Kernel\l_OSG/ArrayKernelT.hh" alt="" coords="2752,433,2912,487"/>
+<area shape="rect" id="node91" href="$a00544_source.html" title="OpenMesh/Tools/Kernel\l_OSG/PropertyKernel.hh" alt="" coords="2155,214,2320,269"/>
+</map>

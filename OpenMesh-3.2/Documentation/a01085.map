@@ -1,0 +1,8 @@
+<map id="OpenMesh::IO::BaseWriter" name="OpenMesh::IO::BaseWriter">
+<area shape="rect" id="node3" href="$a00067.html" title="This class defines the OBJ writer. " alt="" coords="236,5,425,38"/>
+<area shape="rect" id="node5" href="$a00069.html" title="Implementation of the OFF format writer. " alt="" coords="236,61,425,94"/>
+<area shape="rect" id="node7" href="$a00071.html" title="Implementation of the OM format writer. " alt="" coords="239,117,423,150"/>
+<area shape="rect" id="node9" href="$a00073.html" title="Implementation of the PLY format writer. " alt="" coords="237,173,424,206"/>
+<area shape="rect" id="node11" href="$a00075.html" title="Implementation of the STL format writer. " alt="" coords="237,229,424,262"/>
+<area shape="rect" id="node13" href="$a00076.html" title="OpenMesh::IO::_VTKWriter_" alt="" coords="236,285,425,318"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="OpenMesh::BaseProperty" name="OpenMesh::BaseProperty">
+<area shape="rect" id="node3" href="$a00221.html" title="Property adaptor for OpenSG GeoProperties. " alt="" coords="228,15,417,70"/>
+<area shape="rect" id="node7" href="$a00234.html" title="Default property class for any type T. " alt="" coords="232,93,413,126"/>
+<area shape="rect" id="node9" href="$a00235.html" title="Property specialization for bool type. " alt="" coords="248,149,397,203"/>
+<area shape="rect" id="node11" href="$a00236.html" title="Property specialization for std::string type. " alt="" coords="248,226,397,281"/>
+<area shape="rect" id="node5" href="$a00164.html" title="Adaptor for osg::GeoIndicesUI32. " alt="" coords="468,5,633,81"/>
+</map>

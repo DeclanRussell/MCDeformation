@@ -1,0 +1,13 @@
+/home/dexternation/MasterClass/MCDeformation/OpenMesh-3.2/build/src/OpenMesh/Apps/VDProgMesh/Analyzer/CMakeFiles/Analyzer.dir
+/home/dexternation/MasterClass/MCDeformation/OpenMesh-3.2/build/src/OpenMesh/Apps/Dualizer/CMakeFiles/Dualizer.dir
+/home/dexternation/MasterClass/MCDeformation/OpenMesh-3.2/build/src/OpenMesh/Core/CMakeFiles/OpenMeshCore.dir
+/home/dexternation/MasterClass/MCDeformation/OpenMesh-3.2/build/src/OpenMesh/Core/CMakeFiles/OpenMeshCoreStatic.dir
+/home/dexternation/MasterClass/MCDeformation/OpenMesh-3.2/build/src/OpenMesh/Tools/CMakeFiles/OpenMeshTools.dir
+/home/dexternation/MasterClass/MCDeformation/OpenMesh-3.2/build/src/OpenMesh/Tools/CMakeFiles/OpenMeshToolsStatic.dir
+/home/dexternation/MasterClass/MCDeformation/OpenMesh-3.2/build/CMakeFiles/PACKAGE_SOURCE.dir
+/home/dexternation/MasterClass/MCDeformation/OpenMesh-3.2/build/src/OpenMesh/Apps/Smoothing/CMakeFiles/Smoothing.dir
+/home/dexternation/MasterClass/MCDeformation/OpenMesh-3.2/build/src/OpenMesh/Apps/Subdivider/commandlineAdaptiveSubdivider/CMakeFiles/commandlineAdaptiveSubdivider.dir
+/home/dexternation/MasterClass/MCDeformation/OpenMesh-3.2/build/src/OpenMesh/Apps/Decimating/commandlineDecimater/CMakeFiles/commandlineDecimater.dir
+/home/dexternation/MasterClass/MCDeformation/OpenMesh-3.2/build/src/OpenMesh/Apps/Subdivider/commandlineSubdivider/CMakeFiles/commandlineSubdivider.dir
+/home/dexternation/MasterClass/MCDeformation/OpenMesh-3.2/build/src/OpenMesh/Apps/mconvert/CMakeFiles/mconvert.dir
+/home/dexternation/MasterClass/MCDeformation/OpenMesh-3.2/build/src/OpenMesh/Apps/VDProgMesh/mkbalancedpm/CMakeFiles/mkbalancedpm.dir

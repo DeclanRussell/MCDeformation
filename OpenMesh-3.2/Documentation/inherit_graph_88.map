@@ -1,0 +1,21 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$a00242.html" title="Base class for adaptive composite subdivision rules. " alt="" coords="5,662,216,717"/>
+<area shape="rect" id="node3" href="$a00124.html" title="Composite rule EdE. " alt="" coords="265,5,420,59"/>
+<area shape="rect" id="node5" href="$a00125.html" title="Composite rule EdEc. " alt="" coords="265,82,420,137"/>
+<area shape="rect" id="node7" href="$a00131.html" title="Composite rule EF. " alt="" coords="265,159,420,214"/>
+<area shape="rect" id="node9" href="$a00135.html" title="Composite rule EV. " alt="" coords="265,237,420,291"/>
+<area shape="rect" id="node11" href="$a00136.html" title="Composite rule EVc. " alt="" coords="265,314,420,369"/>
+<area shape="rect" id="node13" href="$a00145.html" title="Composite rule FE. " alt="" coords="265,391,420,446"/>
+<area shape="rect" id="node15" href="$a00146.html" title="Composite rule FF. " alt="" coords="265,469,420,523"/>
+<area shape="rect" id="node17" href="$a00147.html" title="Composite rule FFc. " alt="" coords="265,546,420,601"/>
+<area shape="rect" id="node19" href="$a00150.html" title="Composite rule FV. " alt="" coords="265,623,420,678"/>
+<area shape="rect" id="node21" href="$a00151.html" title="Composite rule FVc. " alt="" coords="265,701,420,755"/>
+<area shape="rect" id="node23" href="$a00264.html" title="Adaptive Composite Subdivision framework. " alt="" coords="265,778,420,833"/>
+<area shape="rect" id="node25" href="$a00265.html" title="Topological composite rule Tvv,4 doing a 1&#45;4 split of a face. " alt="" coords="265,855,420,910"/>
+<area shape="rect" id="node27" href="$a00266.html" title="Composite rule VdE. " alt="" coords="265,933,420,987"/>
+<area shape="rect" id="node29" href="$a00267.html" title="Composite rule VdEc. " alt="" coords="265,1010,420,1065"/>
+<area shape="rect" id="node31" href="$a00269.html" title="Composite rule VE. " alt="" coords="265,1087,420,1142"/>
+<area shape="rect" id="node33" href="$a00300.html" title="Composite rule VF. " alt="" coords="265,1165,420,1219"/>
+<area shape="rect" id="node35" href="$a00309.html" title="Composite rule VV. " alt="" coords="265,1242,420,1297"/>
+<area shape="rect" id="node37" href="$a00310.html" title="Composite rule VVc. " alt="" coords="265,1319,420,1374"/>
+</map>

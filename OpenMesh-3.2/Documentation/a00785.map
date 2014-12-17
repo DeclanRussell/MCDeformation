@@ -1,0 +1,13 @@
+<map id="OpenMesh/Tools/Subdivider/Uniform/SubdividerT.hh" name="OpenMesh/Tools/Subdivider/Uniform/SubdividerT.hh">
+<area shape="rect" id="node3" href="$a00392_source.html" title="OpenMesh/Apps/Subdivider\l/SubdivideWidget.hh" alt="" coords="5,121,189,175"/>
+<area shape="rect" id="node5" href="$a00572.html" title="OpenMesh/Tools/Subdivider\l/Uniform/Sqrt3T.hh" alt="" coords="213,121,397,175"/>
+<area shape="rect" id="node7" href="$a00569.html" title="OpenMesh/Tools/Subdivider\l/Uniform/LoopT.hh" alt="" coords="421,121,605,175"/>
+<area shape="rect" id="node9" href="$a00558.html" title="OpenMesh/Tools/Subdivider\l/Uniform/Composite/CompositeT.hh" alt="" coords="629,121,859,175"/>
+<area shape="rect" id="node17" href="$a00571.html" title="Interpolating Labsik Greiner Subdivider as described in &quot;Interpolating sqrt(3) subdivision&quot; Labsik &amp; ..." alt="" coords="883,110,1120,186"/>
+<area shape="rect" id="node19" href="$a00570.html" title="The modified butterfly scheme of Denis Zorin, Peter Schröder and Wim Sweldens, ``Interpolating subdiv..." alt="" coords="1144,121,1347,175"/>
+<area shape="rect" id="node21" href="$a00565.html" title="OpenMesh/Tools/Subdivider\l/Uniform/CatmullClarkT.hh" alt="" coords="1371,121,1555,175"/>
+<area shape="rect" id="node23" href="$a00568.html" title="OpenMesh/Tools/Subdivider\l/Uniform/LongestEdgeT.hh" alt="" coords="1579,121,1763,175"/>
+<area shape="rect" id="node11" href="$a00567.html" title="OpenMesh/Tools/Subdivider\l/Uniform/CompositeSqrt3T.hh" alt="" coords="429,235,624,290"/>
+<area shape="rect" id="node13" href="$a00566.html" title="OpenMesh/Tools/Subdivider\l/Uniform/CompositeLoopT.hh" alt="" coords="648,235,840,290"/>
+<area shape="rect" id="node15" href="$a00556.html" title="OpenMesh/Tools/Subdivider\l/Uniform/Composite/CompositeT.cc" alt="" coords="864,235,1093,290"/>
+</map>

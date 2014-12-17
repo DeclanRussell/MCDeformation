@@ -1,0 +1,14 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$a00201.html" title="Base class for all decimation modules. " alt="" coords="5,374,163,429"/>
+<area shape="rect" id="node3" href="$a00210.html" title="OpenMesh::Decimater\l::ModQuadricT\&lt; D \&gt;" alt="" coords="235,5,387,59"/>
+<area shape="rect" id="node5" href="$a00199.html" title="Use aspect ratio to control decimation. " alt="" coords="212,82,409,137"/>
+<area shape="rect" id="node7" href="$a00202.html" title="Use edge length to control decimation. " alt="" coords="213,159,408,214"/>
+<area shape="rect" id="node9" href="$a00204.html" title="Use Hausdorff distance to control decimation. " alt="" coords="220,237,401,291"/>
+<area shape="rect" id="node11" href="$a00206.html" title="Lock one&#45;ring around remaining vertex after a collapse to prevent further collapses of halfedges inci..." alt="" coords="231,314,391,390"/>
+<area shape="rect" id="node13" href="$a00207.html" title="Use Normal deviation to control decimation. " alt="" coords="232,413,389,489"/>
+<area shape="rect" id="node15" href="$a00208.html" title="Decimating module to avoid flipping of faces. " alt="" coords="235,511,387,587"/>
+<area shape="rect" id="node17" href="$a00209.html" title="Collect progressive mesh information while decimating. " alt="" coords="217,610,404,665"/>
+<area shape="rect" id="node19" href="$a00210.html" title="Mesh decimation module computing collapse priority based on error quadrics. " alt="" coords="225,687,396,742"/>
+<area shape="rect" id="node23" href="$a00211.html" title="Use Roundness of triangles to control decimation. " alt="" coords="215,765,407,819"/>
+<area shape="rect" id="node21" href="$a00200.html" title="ModBalancerT\&lt; D \&gt;" alt="" coords="460,698,599,731"/>
+</map>

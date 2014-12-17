@@ -1,0 +1,21 @@
+<map id="OpenMesh/Tools/Decimater/DecimaterT.hh" name="OpenMesh/Tools/Decimater/DecimaterT.hh">
+<area shape="rect" id="node5" href="$a00507_source.html" title="OpenMesh/Core/Utils\l/Property.hh" alt="" coords="556,214,703,269"/>
+<area shape="rect" id="node83" href="$a00579.html" title="A generic heap class. " alt="" coords="1889,609,2039,663"/>
+<area shape="rect" id="node90" href="$a00518.html" title="OpenMesh/Tools/Decimater\l/BaseDecimaterT.hh" alt="" coords="375,110,559,165"/>
+<area shape="rect" id="node9" href="$a00472_source.html" title="OpenMesh/Core/Mesh\l/Handles.hh" alt="" coords="1967,817,2119,871"/>
+<area shape="rect" id="node14" href="$a00500_source.html" title="OpenMesh/Core/Utils\l/BaseProperty.hh" alt="" coords="583,318,729,373"/>
+<area shape="rect" id="node18" href="$a00440_source.html" title="OpenMesh/Core/IO/StoreRestore.hh" alt="" coords="587,422,821,455"/>
+<area shape="rect" id="node61" href="$a00492.html" title="This file provides the streams omlog, omout, and omerr. " alt="" coords="1747,713,1912,767"/>
+<area shape="rect" id="node23" href="$a00435_source.html" title="OpenMesh/Core/IO/SR\l_binary.hh" alt="" coords="751,609,908,663"/>
+<area shape="rect" id="node33" href="$a00436_source.html" title="OpenMesh/Core/IO/SR\l_binary_spec.hh" alt="" coords="985,505,1143,559"/>
+<area shape="rect" id="node45" href="$a00406_source.html" title="OpenMesh/Core/Geometry\l/VectorT.hh" alt="" coords="1196,609,1375,663"/>
+<area shape="rect" id="node47" href="$a00479_source.html" title="OpenMesh/Core/Mesh\l/Status.hh" alt="" coords="1449,817,1601,871"/>
+<area shape="rect" id="node50" href="$a00439_source.html" title="OpenMesh/Core/IO/SR\l_types.hh" alt="" coords="1441,713,1599,767"/>
+<area shape="rect" id="node53" href="$a00437_source.html" title="OpenMesh/Core/IO/SR\l_rbo.hh" alt="" coords="1399,609,1556,663"/>
+<area shape="rect" id="node75" href="$a00505_source.html" title="OpenMesh/Core/Utils\l/GenProg.hh" alt="" coords="1228,817,1375,871"/>
+<area shape="rect" id="node63" href="$a00490_source.html" title="OpenMesh/Core/System\l/mostream.hh" alt="" coords="1777,817,1943,871"/>
+<area shape="rect" id="node85" href="$a00399.html" title="Config.hh" alt="" coords="1676,827,1753,861"/>
+<area shape="rect" id="node94" href="$a00528.html" title="Base class for all decimation modules. " alt="" coords="245,214,429,269"/>
+<area shape="rect" id="node96" href="$a00506_source.html" title="OpenMesh/Core/Utils\l/Noncopyable.hh" alt="" coords="264,318,411,373"/>
+<area shape="rect" id="node99" href="$a00519.html" title="Provides data class CollapseInfoT for storing all information about a halfedge collapse. " alt="" coords="5,318,189,373"/>
+</map>

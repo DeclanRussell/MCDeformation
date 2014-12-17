@@ -1,0 +1,21 @@
+<map id="OpenMesh::Utils::Noncopyable" name="OpenMesh::Utils::Noncopyable">
+<area shape="rect" id="node3" href="$a00085.html" title="OpenMesh::Decimater\l::BaseDecimaterT\&lt; MeshT \&gt;" alt="" coords="259,82,451,137"/>
+<area shape="rect" id="node12" href="$a00203.html" title="Handle for mesh decimation modules. " alt="" coords="269,230,440,285"/>
+<area shape="rect" id="node14" href="$a00245.html" title="Base class for smoothing algorithms. " alt="" coords="280,307,429,362"/>
+<area shape="rect" id="node20" href="$a00252.html" title="Abstract base class for uniform subdivision algorithms. " alt="" coords="271,455,439,531"/>
+<area shape="rect" id="node40" href="$a00254.html" title="Helper class for test programms. " alt="" coords="269,554,440,609"/>
+<area shape="rect" id="node5" href="$a00120.html" title="Decimater framework. " alt="" coords="517,5,680,59"/>
+<area shape="rect" id="node9" href="$a00186.html" title="Multiple choice decimater framework. " alt="" coords="509,82,688,137"/>
+<area shape="rect" id="node7" href="$a00198.html" title="Mixed decimater framework. " alt="" coords="747,43,944,98"/>
+<area shape="rect" id="node16" href="$a00182.html" title="Laplacian Smoothing. " alt="" coords="524,159,673,235"/>
+<area shape="rect" id="node18" href="$a00180.html" title="Laplacian Smoothing. " alt="" coords="757,159,933,235"/>
+<area shape="rect" id="node22" href="$a00098.html" title="Based on code from Leon Kos, CAD lab, Mech.Eng., University of Ljubljana, Slovenia (http://www..." alt="" coords="515,258,683,334"/>
+<area shape="rect" id="node24" href="$a00110.html" title="This class provides the composite subdivision rules for the uniform case. " alt="" coords="515,357,683,433"/>
+<area shape="rect" id="node30" href="$a00177.html" title="Uniform Interpolating Sqrt3 subdivision algorithm " alt="" coords="503,455,695,531"/>
+<area shape="rect" id="node32" href="$a00183.html" title="Uniform LongestEdgeT subdivision algorithm " alt="" coords="515,554,683,630"/>
+<area shape="rect" id="node34" href="$a00185.html" title="Uniform Loop subdivision algorithm. " alt="" coords="501,653,696,729"/>
+<area shape="rect" id="node36" href="$a00205.html" title="Modified Butterfly subdivision algorithm. " alt="" coords="508,751,689,827"/>
+<area shape="rect" id="node38" href="$a00246.html" title="Uniform Sqrt3 subdivision algorithm " alt="" coords="500,850,697,926"/>
+<area shape="rect" id="node26" href="$a00107.html" title="Uniform composite Loop subdivision algorithm. " alt="" coords="755,307,936,383"/>
+<area shape="rect" id="node28" href="$a00108.html" title="Uniform composite sqrt(3) subdivision algorithm. " alt="" coords="752,406,939,482"/>
+</map>
