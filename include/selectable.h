@@ -1,6 +1,14 @@
 #ifndef SELECTABLE_H
 #define SELECTABLE_H
 
+//----------------------------------------------------------------------------------------------------------------------
+/// @file selectable.h
+/// @brief A class to add selectable objects to a scene
+/// @author Declan Russell
+/// @version 1.0
+/// @date 12/12/14 Initial version
+//----------------------------------------------------------------------------------------------------------------------
+
 #include <ngl/Mat4.h>
 #include <ngl/Camera.h>
 #include <ngl/VertexArrayObject.h>

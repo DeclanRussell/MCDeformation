@@ -49,13 +49,15 @@ SOURCES       = src/main.cpp \
 		src/mainwindow.cpp \
 		src/OpenGLWidget.cpp \
 		src/selectable.cpp \
-		src/lmesolver.cpp moc/moc_mainwindow.cpp \
+		src/lmesolver.cpp \
+		src/importmesh.cpp moc/moc_mainwindow.cpp \
 		moc/moc_OpenGLWidget.cpp
 OBJECTS       = obj/main.o \
 		obj/mainwindow.o \
 		obj/OpenGLWidget.o \
 		obj/selectable.o \
 		obj/lmesolver.o \
+		obj/importmesh.o \
 		obj/moc_mainwindow.o \
 		obj/moc_OpenGLWidget.o
 DIST          = /opt/Qt/5.2.1/gcc_64/mkspecs/features/spec_pre.prf \
@@ -420,7 +422,7 @@ qmake_all: FORCE
 
 dist: 
 	@test -d obj/Deformation1.0.0 || mkdir -p obj/Deformation1.0.0
-	$(COPY_FILE) --parents $(SOURCES) $(DIST) obj/Deformation1.0.0/ && $(COPY_FILE) --parents include/mainwindow.h include/Camera.h include/OpenGLWidget.h include/ui_mainwindow.h include/selectable.h include/lmesolver.h obj/Deformation1.0.0/ && $(COPY_FILE) --parents src/main.cpp src/mainwindow.cpp src/OpenGLWidget.cpp src/selectable.cpp src/lmesolver.cpp obj/Deformation1.0.0/ && $(COPY_FILE) --parents ui/mainwindow.ui obj/Deformation1.0.0/ && (cd `dirname obj/Deformation1.0.0` && $(TAR) Deformation1.0.0.tar Deformation1.0.0 && $(COMPRESS) Deformation1.0.0.tar) && $(MOVE) `dirname obj/Deformation1.0.0`/Deformation1.0.0.tar.gz . && $(DEL_FILE) -r obj/Deformation1.0.0
+	$(COPY_FILE) --parents $(SOURCES) $(DIST) obj/Deformation1.0.0/ && $(COPY_FILE) --parents include/mainwindow.h include/Camera.h include/OpenGLWidget.h include/ui_mainwindow.h include/selectable.h include/lmesolver.h include/importmesh.h obj/Deformation1.0.0/ && $(COPY_FILE) --parents src/main.cpp src/mainwindow.cpp src/OpenGLWidget.cpp src/selectable.cpp src/lmesolver.cpp src/importmesh.cpp obj/Deformation1.0.0/ && $(COPY_FILE) --parents ui/mainwindow.ui obj/Deformation1.0.0/ && (cd `dirname obj/Deformation1.0.0` && $(TAR) Deformation1.0.0.tar Deformation1.0.0 && $(COMPRESS) Deformation1.0.0.tar) && $(MOVE) `dirname obj/Deformation1.0.0`/Deformation1.0.0.tar.gz . && $(DEL_FILE) -r obj/Deformation1.0.0
 
 
 clean:compiler_clean 
@@ -589,8 +591,13 @@ moc/moc_mainwindow.cpp: /opt/Qt/5.2.1/gcc_64/include/QtWidgets/QMainWindow \
 		/home/dexternation/NGL/include/ngl/Vec3.h \
 		/home/dexternation/NGL/include/ngl/RibExport.h \
 		/home/dexternation/NGL/include/ngl/Plane.h \
-		include/selectable.h \
+		/home/dexternation/NGL/include/ngl/Text.h \
+		/home/dexternation/NGL/include/ngl/Colour.h \
 		/home/dexternation/NGL/include/ngl/VertexArrayObject.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/QHash \
+		/opt/Qt/5.2.1/gcc_64/include/QtGui/QFont \
+		include/selectable.h \
+		include/lmesolver.h \
 		include/mainwindow.h
 	/opt/Qt/5.2.1/gcc_64/bin/moc $(DEFINES) $(INCPATH) include/mainwindow.h -o moc/moc_mainwindow.cpp
 
@@ -732,8 +739,13 @@ moc/moc_OpenGLWidget.cpp: /opt/Qt/5.2.1/gcc_64/include/QtOpenGL/QGLWidget \
 		/home/dexternation/NGL/include/ngl/Vec3.h \
 		/home/dexternation/NGL/include/ngl/RibExport.h \
 		/home/dexternation/NGL/include/ngl/Plane.h \
-		include/selectable.h \
+		/home/dexternation/NGL/include/ngl/Text.h \
+		/home/dexternation/NGL/include/ngl/Colour.h \
 		/home/dexternation/NGL/include/ngl/VertexArrayObject.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/QHash \
+		/opt/Qt/5.2.1/gcc_64/include/QtGui/QFont \
+		include/selectable.h \
+		include/lmesolver.h \
 		include/OpenGLWidget.h
 	/opt/Qt/5.2.1/gcc_64/bin/moc $(DEFINES) $(INCPATH) include/OpenGLWidget.h -o moc/moc_OpenGLWidget.cpp
 
@@ -906,8 +918,13 @@ obj/main.o: src/main.cpp /opt/Qt/5.2.1/gcc_64/include/QtWidgets/QApplication \
 		/home/dexternation/NGL/include/ngl/Vec3.h \
 		/home/dexternation/NGL/include/ngl/RibExport.h \
 		/home/dexternation/NGL/include/ngl/Plane.h \
+		/home/dexternation/NGL/include/ngl/Text.h \
+		/home/dexternation/NGL/include/ngl/Colour.h \
+		/home/dexternation/NGL/include/ngl/VertexArrayObject.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/QHash \
+		/opt/Qt/5.2.1/gcc_64/include/QtGui/QFont \
 		include/selectable.h \
-		/home/dexternation/NGL/include/ngl/VertexArrayObject.h
+		include/lmesolver.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/main.o src/main.cpp
 
 obj/mainwindow.o: src/mainwindow.cpp include/mainwindow.h \
@@ -1054,8 +1071,13 @@ obj/mainwindow.o: src/mainwindow.cpp include/mainwindow.h \
 		/home/dexternation/NGL/include/ngl/Vec3.h \
 		/home/dexternation/NGL/include/ngl/RibExport.h \
 		/home/dexternation/NGL/include/ngl/Plane.h \
-		include/selectable.h \
+		/home/dexternation/NGL/include/ngl/Text.h \
+		/home/dexternation/NGL/include/ngl/Colour.h \
 		/home/dexternation/NGL/include/ngl/VertexArrayObject.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/QHash \
+		/opt/Qt/5.2.1/gcc_64/include/QtGui/QFont \
+		include/selectable.h \
+		include/lmesolver.h \
 		include/ui_mainwindow.h \
 		/opt/Qt/5.2.1/gcc_64/include/QtCore/QVariant \
 		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/QAction \
@@ -1249,19 +1271,24 @@ obj/OpenGLWidget.o: src/OpenGLWidget.cpp /opt/Qt/5.2.1/gcc_64/include/QtGui/QGui
 		/home/dexternation/NGL/include/ngl/Vec3.h \
 		/home/dexternation/NGL/include/ngl/RibExport.h \
 		/home/dexternation/NGL/include/ngl/Plane.h \
-		include/selectable.h \
+		/home/dexternation/NGL/include/ngl/Text.h \
+		/home/dexternation/NGL/include/ngl/Colour.h \
 		/home/dexternation/NGL/include/ngl/VertexArrayObject.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/QHash \
+		/opt/Qt/5.2.1/gcc_64/include/QtGui/QFont \
+		include/selectable.h \
+		include/lmesolver.h \
 		/home/dexternation/NGL/include/ngl/NGLInit.h \
 		/home/dexternation/NGL/include/ngl/Singleton.h \
 		/opt/Qt/5.2.1/gcc_64/include/QtCore/QMutexLocker \
 		/home/dexternation/NGL/include/ngl/VAOPrimitives.h \
 		/home/dexternation/NGL/include/ngl/ShaderLib.h \
-		/home/dexternation/NGL/include/ngl/Colour.h \
 		/home/dexternation/NGL/include/ngl/Shader.h \
 		/home/dexternation/NGL/include/ngl/ShaderProgram.h \
 		/home/dexternation/NGL/include/ngl/Util.h \
 		/home/dexternation/NGL/include/ngl/Mat3.h \
-		/home/dexternation/NGL/include/ngl/Random.h
+		/home/dexternation/NGL/include/ngl/Random.h \
+		include/importmesh.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/OpenGLWidget.o src/OpenGLWidget.cpp
 
 obj/selectable.o: src/selectable.cpp include/selectable.h \
@@ -1536,6 +1563,9 @@ obj/lmesolver.o: src/lmesolver.cpp include/lmesolver.h \
 		/opt/Qt/5.2.1/gcc_64/include/QtGui/QSurfaceFormat \
 		/opt/Qt/5.2.1/gcc_64/include/QtGui/qsurfaceformat.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/lmesolver.o src/lmesolver.cpp
+
+obj/importmesh.o: src/importmesh.cpp include/importmesh.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/importmesh.o src/importmesh.cpp
 
 obj/moc_mainwindow.o: moc/moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/moc_mainwindow.o moc/moc_mainwindow.cpp

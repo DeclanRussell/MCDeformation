@@ -1,6 +1,13 @@
 #ifndef OPENGLWIDGET_H
 #define OPENGLWIDGET_H
 
+//----------------------------------------------------------------------------------------------------------------------
+/// @file OpenGLWidget.h
+/// @brief Basic scene for my deformation aplication
+/// @author Declan Russell
+/// @version 1.0
+/// @date 12/12/14 Initial version
+//----------------------------------------------------------------------------------------------------------------------
 
 #include<GL/glew.h>
 #include <QGLWidget>
@@ -15,6 +22,8 @@
 
 #include "selectable.h"
 #include "lmesolver.h"
+
+
 
 
 class OpenGLWidget : public QGLWidget

@@ -8,6 +8,7 @@
 #include <ngl/Random.h>
 #include <ngl/VertexArrayObject.h>
 
+#include "importmesh.h"
 
 
 
@@ -105,6 +106,9 @@ void OpenGLWidget::initializeGL(){
     square.push_back(v2);
     square.push_back(v3);
     square.push_back(v4);
+
+    //lets import our mesh
+    ImportMesh importedMesh("models/newteapot.obj");
 
     //lets make a circle
     ngl::Vec3 radius(0,5,0);
@@ -275,7 +279,7 @@ void OpenGLWidget::mousePressEvent ( QMouseEvent * _event)
   }
 
   m_selected.clear();
-  for(int i=0; i<m_selectables.size();i++){
+  for(unsigned int i=0; i<m_selectables.size();i++){
       m_selectables[i]->testSelection(width(),height(),_event->x(),_event->y(),m_mouseGlobalTX, m_cam);
       if(m_selectables[i]->isSelected())
           m_selected.push_back(m_selectables[i]);

@@ -17,7 +17,8 @@ SOURCES += \
     src/mainwindow.cpp \
     src/OpenGLWidget.cpp \
     src/selectable.cpp \
-    src/lmesolver.cpp
+    src/lmesolver.cpp \
+    src/importmesh.cpp
 
 
 HEADERS += \
@@ -26,10 +27,13 @@ HEADERS += \
     include/OpenGLWidget.h \
     include/ui_mainwindow.h \
     include/selectable.h \
-    include/lmesolver.h
+    include/lmesolver.h \
+    include/importmesh.h
 
 INCLUDEPATH +=./include /opt/local/include $$(HOME)/NGL/include/
-LIBS += -L/opt/local/lib -lGLEW
+#inlude tetgen!
+#INCLUDEPATH +=./tetgen1.5.0
+LIBS += -L/opt/local/lib -lGLEW #-L./tetgen1.5.0/build -ltet
 DESTDIR=./
 
 CONFIG += console

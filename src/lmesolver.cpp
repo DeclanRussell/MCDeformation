@@ -17,7 +17,7 @@ void LMESolver::createMatricies(std::vector<ngl::Vec3> _points){
     ngl::Vec3 current,prev,next,delta;
     int prevLoc, nextLoc;
 
-    for(int i=0; i<_points.size();i++){
+    for(unsigned int i=0; i<_points.size();i++){
         std::cout<<"OG points "<<_points[i].m_x<<","<<_points[i].m_y<<","<<_points[i].m_z<<std::endl;
     }
     for(unsigned int i=0; i<_points.size();i++){

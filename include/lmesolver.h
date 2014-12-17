@@ -1,6 +1,14 @@
 #ifndef LMESOLVER_H
 #define LMESOLVER_H
 
+//----------------------------------------------------------------------------------------------------------------------
+/// @file LMESolver.h
+/// @brief A class to do the calculations for our laplacian mesh editing
+/// @author Declan Russell
+/// @version 1.0
+/// @date 12/12/14 Initial version
+//----------------------------------------------------------------------------------------------------------------------
+
 #include <eigen3/Eigen/Sparse>
 #include <ngl/Vec3.h>
 
