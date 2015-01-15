@@ -31,9 +31,9 @@ HEADERS += \
     include/importmesh.h
 
 INCLUDEPATH +=./include /opt/local/include $$(HOME)/NGL/include/
-#inlude tetgen!
-#INCLUDEPATH +=./tetgen1.5.0
-LIBS += -L/opt/local/lib -lGLEW #-L./tetgen1.5.0/build -ltet
+#inlude tetgen and open mesh!
+INCLUDEPATH +=./tetgen1.5.0
+LIBS += -L/opt/local/lib -lGLEW -L/usr/local/lib/OpenMesh -lOpenMeshCored -lOpenMeshToolsd -L./tetgen1.5.0/build -ltet
 DESTDIR=./
 
 CONFIG += console
@@ -66,5 +66,5 @@ FORMS += \
     ui/mainwindow.ui
 
 OTHER_FILES += \
-    shaders/PhongFrag.glsl \
-    shaders/PhongVert.glsl
+    shaders/DeformationFrag.glsl \
+    shaders/DeformationVert.glsl

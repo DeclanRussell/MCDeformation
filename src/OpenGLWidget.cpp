@@ -8,7 +8,6 @@
 #include <ngl/Random.h>
 #include <ngl/VertexArrayObject.h>
 
-#include "importmesh.h"
 
 
 
@@ -62,6 +61,32 @@ void OpenGLWidget::initializeGL(){
     // Initialise the model matrix
     m_modelMatrix = ngl::Mat4(1.0);
     ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+    //first lets add out deformation shader to our program
+    //create the program
+    shader->createShaderProgram("DeformationShader");
+    //add our shaders
+    shader->attachShader("DeformationVert",ngl::VERTEX);
+    shader->attachShader("DeformationFrag",ngl::FRAGMENT);
+    //load the source
+    shader->loadShaderSource("DeformationVert","shaders/DeformationVert.glsl");
+    shader->loadShaderSource("DeformationFrag","shaders/DeformationFrag.glsl");
+    //compile them
+    shader->compileShader("DeformationVert");
+    shader->compileShader("DeformationFrag");
+    //attach them to our program
+    shader->attachShaderToProgram("DeformationShader","DeformationVert");
+    shader->attachShaderToProgram("DeformationShader","DeformationFrag");
+    //link our shader to opengl
+    shader->linkProgramObject("DeformationShader");
+    //set our shader uniforms
+    (*shader)["DeformationShader"]->use();
+    shader->setShaderParam3f("light.position",-1,-1,-1);
+    shader->setShaderParam3f("light.intensity",0.8,0.8,0.8);
+    shader->setShaderParam3f("Kd",0.5, 0.5, 0.5);
+    shader->setShaderParam3f("Ka",0.5, 0.5, 0.5);
+    shader->setShaderParam3f("Ks",1.0,1.0,1.0);
+    shader->setShaderParam1f("shininess",100.0);
+
     (*shader)["nglDiffuseShader"]->use();
     shader->setShaderParam4f("Colour",1,1,1,1);
 
@@ -72,7 +97,7 @@ void OpenGLWidget::initializeGL(){
 
     //create our sphere primative VAO
     ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
-    prim->createSphere("sphere",0.5,20);
+    prim->createSphere("sphere",0.1,5);
 
 
 
@@ -96,28 +121,14 @@ void OpenGLWidget::initializeGL(){
 //        m_selectables.push_back(sel);
 //    }
 
-    // lets test out our laplacien solver
-    std::vector<ngl::Vec3> square;
-    ngl::Vec3 v1(0.0,0.0,0.0);
-    ngl::Vec3 v2(0.0,1.0,0.0);
-    ngl::Vec3 v3(1.0,1.0,0.0);
-    ngl::Vec3 v4(1.0,0.0,0.0);
-    square.push_back(v1);
-    square.push_back(v2);
-    square.push_back(v3);
-    square.push_back(v4);
 
     //lets import our mesh
-    ImportMesh importedMesh("models/newteapot.obj");
-
+    m_importedMesh = new ImportMesh("models/pikatchu.obj");
+    m_LMESolver = new LMESolver(m_importedMesh->getMeshPtr());
     //lets make a circle
-    ngl::Vec3 radius(0,5,0);
-    ngl::Mat4 rot;
-    ngl::Vec3 pos;
-    for(unsigned int i=0; i<36; i++){
-        rot.rotateZ(10*i);
-        pos=rot*radius;
-        selectable *sel = new selectable(pos,i);
+    for(unsigned int i=0; i<m_importedMesh->m_vertPositions.size(); i++){
+        selectable *sel = new selectable(m_importedMesh->m_vertPositions[i],i,0.2);
+        sel->isMovable(false);
         m_selectables.push_back(sel);
     }
 
@@ -138,6 +149,7 @@ void OpenGLWidget::resizeGL(const int _w, const int _h){
 }
 //----------------------------------------------------------------------------------------------------------------------
 void OpenGLWidget::timerEvent(QTimerEvent *){
+    m_importedMesh->update();
     updateGL();
 }
 
@@ -160,6 +172,7 @@ void OpenGLWidget::paintGL(){
     m_mouseGlobalTX.m_m[3][1] = m_modelPos.m_y;
     m_mouseGlobalTX.m_m[3][2] = m_modelPos.m_z;
 
+    m_importedMesh->draw(m_mouseGlobalTX,m_cam);
     //m_modelMatrix = m_mouseGlobalTX;
     for(unsigned int i=0; i<m_selectables.size(); i++){
         m_selectables[i]->draw(m_mouseGlobalTX,m_cam);
@@ -292,9 +305,12 @@ void OpenGLWidget::mouseReleaseEvent ( QMouseEvent * _event )
 {
   // this event is called when the mouse button is released
   // we then set Rotate to false
-  if (_event->button() == Qt::LeftButton)
+  if (_event->button() == Qt::MiddleButton)
   {
     m_rotate=false;
+  }
+  if(_event->button() == Qt::LeftButton){
+      m_movePoint = false;
   }
         // right mouse translate mode
   if (_event->button() == Qt::RightButton)
@@ -307,6 +323,7 @@ void OpenGLWidget::wheelEvent(QWheelEvent *_event)
 {
 
     // check the diff of the wheel position (0 means no change)
+    if(!m_rotate)
     if(_event->delta() > 0)
     {
         m_modelPos.m_z+=ZOOM;

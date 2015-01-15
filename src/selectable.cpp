@@ -9,6 +9,7 @@ selectable::selectable()
     m_pos = ngl::Vec3(0.0);
     m_radius = 0.5;
     m_seleted = false;
+    m_isMovable = true;
 }
 //----------------------------------------------------------------------------------------------------------------------
 selectable::selectable(ngl::Vec3 _pos, int _vertexID){
@@ -18,7 +19,19 @@ selectable::selectable(ngl::Vec3 _pos, int _vertexID){
     m_vertexID = _vertexID;
     m_isSelectable = true;
     m_isHandle = false;
+    m_isMovable = true;
 }
+//----------------------------------------------------------------------------------------------------------------------
+selectable::selectable(ngl::Vec3 _pos, int _vertexID, float _radius){
+    m_pos = _pos;
+    m_radius = _radius;
+    m_seleted = false;
+    m_vertexID = _vertexID;
+    m_isSelectable = true;
+    m_isHandle = false;
+    m_isMovable = true;
+}
+
 //----------------------------------------------------------------------------------------------------------------------
 void selectable::testSelection(int _width, int _height,int _mouseX, int _mouseY, ngl::Mat4 _mouseGlobalTX, ngl::Camera *_cam){
     // if this is not a selectable device then do nothing
@@ -50,7 +63,8 @@ void selectable::testSelection(int _width, int _height,int _mouseX, int _mouseY,
     //now to calculate if we intersect with out sphere
     ngl::Vec4 pos4(m_pos);
     pos4.m_w = 1.0;
-    ngl::Vec4 posTX = _mouseGlobalTX * pos4;
+    ngl::Mat4 modelTrans = _mouseGlobalTX.inverse();
+    ngl::Vec4 posTX = modelTrans * pos4;
     ngl::Vec3 posTX3(posTX.m_x,posTX.m_y,posTX.m_z);
     ngl::Vec3 camPos(_cam->getEye().m_x,_cam->getEye().m_y,_cam->getEye().m_z);
     float b = ray_wor.dot(posTX3 - camPos);
@@ -103,8 +117,8 @@ void selectable::loadMatricesToShader(ngl::Mat4 _mouseGlobalTX, ngl::Camera *_ca
         shader->setShaderParam4f("Colour",1,0,0,1);
     }
     else{
-        // if its a handle set it cyan otherwise yellow
-        m_isHandle ? shader->setShaderParam4f("Colour",0,1,1,1) : shader->setShaderParam4f("Colour",1,1,0,1);
+        // if its a handle set it cyan otherwise green
+        m_isHandle ? shader->setShaderParam4f("Colour",0,1,1,1) : shader->setShaderParam4f("Colour",0,1,0,1);
     }
 }
 //----------------------------------------------------------------------------------------------------------------------

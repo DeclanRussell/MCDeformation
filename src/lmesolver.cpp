@@ -13,6 +13,40 @@ LMESolver::LMESolver(std::vector<ngl::Vec3> _points){
     createMatricies(_points);
 }
 //----------------------------------------------------------------------------------------------------------------------
+LMESolver::LMESolver(MyMesh &_mesh){
+    m_laplaceMatrix.resize(_mesh.n_vertices(),_mesh.n_vertices());
+    m_delta.resize(_mesh.n_vertices(),3);
+    createMatricies(_mesh);
+}
+//----------------------------------------------------------------------------------------------------------------------
+void LMESolver::createMatricies(MyMesh &_mesh){
+
+    MyMesh::Point currentPoint;
+    MyMesh::Point sumNeighbours;
+    int numNeighbours;
+    int idx=0;
+    for (MyMesh::VertexIter v_it=_mesh.vertices_begin(); v_it!=_mesh.vertices_end(); ++v_it)
+    {
+        numNeighbours = 0;
+        sumNeighbours = MyMesh::Point(0,0,0);
+        //The diagonal of this matrix will always be 1
+        m_laplaceMatrix.coeffRef(idx,idx) = 1.0;
+        for (MyMesh::VertexVertexIter vv_it=_mesh.vv_iter( *v_it ); vv_it.is_valid(); ++vv_it){
+            numNeighbours++;
+            sumNeighbours = _mesh.point(*vv_it);
+        }
+        sumNeighbours/=numNeighbours;
+        //this will be the value we put in our laplace matrix
+        sumNeighbours*=-1.0;
+        currentPoint = _mesh.point(*v_it);
+
+        m_delta.coeffRef(idx,0) = currentPoint[0];
+        m_delta.coeffRef(idx,1) = currentPoint[1];
+        m_delta.coeffRef(idx,2) = currentPoint[2];
+    }
+}
+
+//----------------------------------------------------------------------------------------------------------------------
 void LMESolver::createMatricies(std::vector<ngl::Vec3> _points){
     ngl::Vec3 current,prev,next,delta;
     int prevLoc, nextLoc;

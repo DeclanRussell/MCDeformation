@@ -9,12 +9,27 @@
 /// @date 12/12/14 Initial version
 //----------------------------------------------------------------------------------------------------------------------
 
-#include <eigen3/Eigen/Sparse>
 #include <ngl/Vec3.h>
+//-------------OpenMesh half edge data structure
+#include <OpenMesh/Core/IO/MeshIO.hh>
+#include <OpenMesh/Core/Mesh/TriMesh_ArrayKernelT.hh>
+//-------------Eigen for sparse calculations
+#include <eigen3/Eigen/Sparse>
+
 
 class LMESolver
 {
-public:
+public:    
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief typedef our ArrayKernal for easier use
+    //----------------------------------------------------------------------------------------------------------------------
+    typedef OpenMesh::TriMesh_ArrayKernelT<OpenMesh::DefaultTraits> MyMesh;
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief contructor to load in our vetex's from a mesh! This also create our laplace and delta matricies
+    /// @param _mesh - call by reference of our mesh stored in OpenMesh's half edge data structure
+    //----------------------------------------------------------------------------------------------------------------------
+    LMESolver(MyMesh &_mesh);
+    //----------------------------------------------------------------------------------------------------------------------
     /// @brief contructor to load in our vertex's and will create our laplace and delta matricies
     /// @param _points - an array of our vertex's
     //----------------------------------------------------------------------------------------------------------------------
@@ -43,6 +58,10 @@ protected:
     //----------------------------------------------------------------------------------------------------------------------
 private:
     //----------------------------------------------------------------------------------------------------------------------
+    /// @brief calculates our laplace matrix and delta matrix using data from our OpenMesh half edge data structure
+    //----------------------------------------------------------------------------------------------------------------------
+    void createMatricies(MyMesh &_mesh);
+    //----------------------------------------------------------------------------------------------------------------------
     /// @brief a funciton to calculate our laplace matrix and delta matrix
     /// @brief in very early stages, only does basic 2D geomtry at the moment
     //----------------------------------------------------------------------------------------------------------------------
@@ -53,6 +72,7 @@ private:
     Eigen::SparseMatrix<double> m_laplaceMatrix;
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief a sparse matrix to hold our calculated vertex deltas
+    /// @todo This needs to be a static matrix for speed
     //----------------------------------------------------------------------------------------------------------------------
     Eigen::SparseMatrix<double> m_delta;
     //----------------------------------------------------------------------------------------------------------------------
