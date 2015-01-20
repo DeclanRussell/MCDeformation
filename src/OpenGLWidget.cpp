@@ -32,6 +32,8 @@ OpenGLWidget::OpenGLWidget(const QGLFormat _format, QWidget *_parent) : QGLWidge
     m_spinYFace=0;
     m_modelPos=ngl::Vec3(0.0);
     m_handlesAdded=false;
+    m_addAnchors = true;
+    m_addHandles = false;
     // re-size the widget to that of the parent (in this case the GLFrame passed in on construction)
     this->resize(_parent->size());
 }
@@ -97,7 +99,7 @@ void OpenGLWidget::initializeGL(){
 
     //create our sphere primative VAO
     ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
-    prim->createSphere("sphere",0.1,5);
+    prim->createSphere("sphere",0.1,10);
 
 
 
@@ -105,8 +107,8 @@ void OpenGLWidget::initializeGL(){
     // Now we will create a basic Camera from the graphics library
     // This is a static camera so it only needs to be set once
     // First create Values for the camera position
-    ngl::Vec3 from(0,0,25);
-    ngl::Vec3 to(0,0,0);
+    ngl::Vec3 from(0,5,20);
+    ngl::Vec3 to(0,5,0);
     ngl::Vec3 up(0,1,0);
     m_cam= new ngl::Camera(from,to,up);
     // set the shape using FOV 45 Aspect Ratio based on Width and Height
@@ -124,10 +126,11 @@ void OpenGLWidget::initializeGL(){
 
     //lets import our mesh
     m_importedMesh = new ImportMesh("models/pikatchu.obj");
+//    m_importedMesh = new ImportMesh("models/sphere.obj");
     m_LMESolver = new LMESolver(m_importedMesh->getMeshPtr());
     //lets make a circle
     for(unsigned int i=0; i<m_importedMesh->m_vertPositions.size(); i++){
-        selectable *sel = new selectable(m_importedMesh->m_vertPositions[i],i,0.2);
+        selectable *sel = new selectable(m_importedMesh->m_vertPositions[i],i,0.1);
         sel->isMovable(false);
         m_selectables.push_back(sel);
     }
@@ -186,29 +189,49 @@ void OpenGLWidget::paintGL(){
     }
 }
 //----------------------------------------------------------------------------------------------------------------------
-void OpenGLWidget::keyPressEvent(QKeyEvent *_event){
-    if(_event->key()==Qt::Key_Return && !m_handlesAdded){
-        //only add our handles if something has been selected
-        if(m_selected.size()>0){
-            std::cout<<"adding handles"<<std::endl;
-            m_handlesAdded = true;
-            std::vector<ngl::Vec3> points;
-            unsigned int i;
-            //get all our postions of our verts
-            for(i=0;i<m_selectables.size();i++){
-                points.push_back(m_selectables[i]->getPos());
-                //remove interactive movement to everything that isnt a handle
-                m_selectables[i]->isSelectable(false);
-            }
+ngl::Vec3 OpenGLWidget::createRay(int _mouseX, int _mouseY){
+    //calculate our normal device coords
+    float x = ((2.0f * _mouseX) / width()) - 1.0f;
+    float y = 1.0f -  ((2.0f * _mouseY) / height());
+    float z = 1.0f;
+    ngl::Vec3 ray_nds(x, y, z);
 
-            m_LMESolver = new LMESolver(points);
-            for(i=0; i<m_selected.size();i++){
-                m_LMESolver->addHandle(m_selected[i]->getID(),1.0);
-                m_selected[i]->isSelectable(true);
-                m_selected[i]->setSelected(false);
-                m_selected[i]->isHandle(true);
+    //calculate our homogenous coords
+    ngl::Vec4 ray_clip(ray_nds.m_x,ray_nds.m_y, 1.0, 1.0);
+
+    //transform from clip space to eye space
+    ngl::Mat4 P =m_cam->getProjectionMatrix();
+    ngl::Vec4 ray_eye = P.inverse() * ray_clip;
+
+    //unproject the x y part
+    ray_eye = ngl::Vec4(ray_eye.m_x,ray_eye.m_y, -1.0, 0.0);
+
+    //transform to our world coordinates
+    ngl::Mat4 V = m_cam->getViewMatrix();
+    ngl::Vec4 temp(V.inverse() * ray_eye);
+    ngl::Vec3 ray_wor(temp.m_x,temp.m_y,temp.m_z);
+    // don't forget to normalise the vector at some point
+    ray_wor.normalize();
+    //return our ray
+    return ray_wor;
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+void OpenGLWidget::keyPressEvent(QKeyEvent *_event){
+    if(_event->key()==Qt::Key_Return){
+        //will be changed later so you can do this with buttons
+        if(m_addAnchors){
+            m_addAnchors=false;
+            m_addHandles=true;
+            m_LMESolver->addHandle();
+            std::vector<ngl::Vec3> newVerts = m_LMESolver->calculatePoints();
+            for(unsigned int i=0;i<m_selectables.size();i++){
+                m_selectables[i]->setPos(newVerts[i]);
             }
-            m_selected.clear();
+        }
+        else if(m_addHandles){
+            m_addHandles = false;
+            m_handlesAdded = true;
         }
     }
 }
@@ -226,26 +249,17 @@ void OpenGLWidget::mouseMoveEvent (QMouseEvent * _event)
     ngl::Vec3 diff(diffx,diffy * -1.0,0.0);
     diff.normalize();
     diff*=0.1;
-    if(m_selected.size()>0){
-        if(m_handlesAdded){
-            ngl::Vec3 newPos;
-            for(unsigned int i=0;i<m_selected.size();i++){
-                newPos = m_selected[i]->getPos()+diff;
-                m_LMESolver->moveHandle(m_selected[i]->getID(),newPos);
-            }
-            std::vector<ngl::Vec3> newVerts = m_LMESolver->calculatePoints();
-            for(unsigned int i=0;i<m_selectables.size();i++){
-                m_selectables[i]->setPos(newVerts[i]);
-            }
+
+    if(m_handlesAdded){
+        m_LMESolver->moveHandle(0,diff);
+        std::vector<ngl::Vec3> newVerts = m_LMESolver->calculatePoints();
+        for(unsigned int i=0;i<m_selectables.size();i++){
+            m_selectables[i]->setPos(newVerts[i]);
         }
-        else{
-            for(unsigned int i=0;i<m_selected.size();i++){
-                m_selected[i]->move(diff);
-            }
-        }
-        m_origX = _event->x();
-        m_origY = _event->y();
     }
+
+    m_origX = _event->x();
+    m_origY = _event->y();
   }
   else if(m_rotate && _event->buttons() == Qt::MiddleButton){
       int diffx=_event->x()-m_origX;
@@ -282,21 +296,33 @@ void OpenGLWidget::mousePressEvent ( QMouseEvent * _event)
       m_origX = _event->x();
       m_origY = _event->y();
       m_movePoint = true;
+      ngl::Vec3 ray = createRay(_event->x(),_event->y());
+      for(unsigned int i=0; i<m_selectables.size();i++){
+        //if selection has been made add it as an anchor
+        if(m_addAnchors){
+
+            if(m_selectables[i]->testSelection(ray,m_mouseGlobalTX, m_cam)){
+                m_LMESolver->addAnchor(m_selectables[i]->getID(),m_importedMesh->getMeshPtr());
+                m_selectables[i]->isSelectable(false);
+            }
+        }
+        if(m_addHandles){
+            if(m_selectables[i]->testSelection(ray,m_mouseGlobalTX, m_cam)){
+                m_LMESolver->editLastHandle(m_selectables[i]->getID(),1.0,m_importedMesh->getMeshPtr());
+            }
+        }
+      }
   }
   // right mouse translate mode
   else if(_event->button() == Qt::RightButton)
   {
+    m_origX = _event->x();
+    m_origY = _event->y();
     m_origXPos = _event->x();
     m_origYPos = _event->y();
-    m_translate=true;
+    m_rotate=true;
   }
 
-  m_selected.clear();
-  for(unsigned int i=0; i<m_selectables.size();i++){
-      m_selectables[i]->testSelection(width(),height(),_event->x(),_event->y(),m_mouseGlobalTX, m_cam);
-      if(m_selectables[i]->isSelected())
-          m_selected.push_back(m_selectables[i]);
-  }
 
 
 }
@@ -315,7 +341,7 @@ void OpenGLWidget::mouseReleaseEvent ( QMouseEvent * _event )
         // right mouse translate mode
   if (_event->button() == Qt::RightButton)
   {
-    m_translate=false;
+    m_rotate=false;
   }
 }
 //----------------------------------------------------------------------------------------------------------------------

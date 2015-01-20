@@ -1,6 +1,7 @@
 #include "lmesolver.h"
 #include <iostream>
 #include <eigen3/Eigen/SparseCholesky>
+#include <cmath>
 
 LMESolver::LMESolver()
 {
@@ -21,28 +22,81 @@ LMESolver::LMESolver(MyMesh &_mesh){
 //----------------------------------------------------------------------------------------------------------------------
 void LMESolver::createMatricies(MyMesh &_mesh){
 
-    MyMesh::Point currentPoint;
-    MyMesh::Point sumNeighbours;
+    //the center point of our traingle "umbrella"
+    MyMesh::Point centerPoint;
+    //our neighbours for doing our cotagent weights
+    MyMesh::Point currentN, nextN, prevN, e1, e2;
+    //our two angles to be calcuated in our cotangent weights
+    float alpha,beta;
+    //our calcuated weight
+    float w;
+    //weight * vj for calcuation of delta at the end
+    MyMesh::Point weightedSum;
+    //our delta vector
+    MyMesh::Point delta;
+    //how many neighbours make up our "umbrella"
     int numNeighbours;
+    //index of our center vertex
     int idx=0;
+    //index of our neightbour vertex
+    int nIdx;
     for (MyMesh::VertexIter v_it=_mesh.vertices_begin(); v_it!=_mesh.vertices_end(); ++v_it)
     {
-        numNeighbours = 0;
-        sumNeighbours = MyMesh::Point(0,0,0);
+
+        //std::cout<<"mesh id "<<v_it.handle().idx()<<std::endl;
         //The diagonal of this matrix will always be 1
         m_laplaceMatrix.coeffRef(idx,idx) = 1.0;
+        //total up how many neighbours we have
+        numNeighbours = 0;
         for (MyMesh::VertexVertexIter vv_it=_mesh.vv_iter( *v_it ); vv_it.is_valid(); ++vv_it){
             numNeighbours++;
-            sumNeighbours = _mesh.point(*vv_it);
         }
-        sumNeighbours/=numNeighbours;
-        //this will be the value we put in our laplace matrix
-        sumNeighbours*=-1.0;
-        currentPoint = _mesh.point(*v_it);
 
-        m_delta.coeffRef(idx,0) = currentPoint[0];
-        m_delta.coeffRef(idx,1) = currentPoint[1];
-        m_delta.coeffRef(idx,2) = currentPoint[2];
+        centerPoint = _mesh.point( *v_it );
+        //set sum to 0
+        weightedSum = MyMesh::Point(0,0,0);
+        for (MyMesh::VertexVertexIter vv_it=_mesh.vv_iter( *v_it ); vv_it.is_valid(); ++vv_it){
+            //increment our neightbour count
+            numNeighbours++;
+            nIdx = vv_it.handle().idx();
+            //get the neightbour points we need for our cotangent calcuations
+            currentN = _mesh.point( *vv_it );
+            nextN = _mesh.point( *++vv_it );
+            prevN = _mesh.point( *----vv_it );
+            //return iterator to original potision
+            ++vv_it;
+
+            //create our 2 edges to work out angle alpha
+            e1 = currentN-nextN;
+            e2 = centerPoint-nextN;
+            //dot product to work out the alpha
+            alpha = acos(OpenMesh::dot(e1,e2)/(e1.length()*e2.length()));
+
+            //now do the same to calculate beta
+            e1 = currentN-prevN;
+            e2 = centerPoint-prevN;
+            //dot product to work out the alpha
+            beta = acos(OpenMesh::dot(e1,e2)/(e1.length()*e2.length()));
+
+            w = 0.5 * (1.0/tan(alpha) + 1.0/tan(beta));
+            w/=numNeighbours;
+
+            //bit of a work around
+            //need to talk to richard about this URGENT!!!!
+            if(w>1) w=1.0;
+            if(w<0) w=0;
+
+            m_laplaceMatrix.coeffRef(idx,nIdx) = -w;
+
+            weightedSum+=w*currentN;
+        }
+
+        //calculate our delta vector
+        delta = centerPoint - weightedSum;
+        m_delta.coeffRef(idx,0) = delta[0];
+        m_delta.coeffRef(idx,1) = delta[1];
+        m_delta.coeffRef(idx,2) = delta[2];
+        idx++;
     }
 }
 
@@ -87,35 +141,104 @@ void LMESolver::createMatricies(std::vector<ngl::Vec3> _points){
     }
 }
 //----------------------------------------------------------------------------------------------------------------------
-void LMESolver::addHandle(int _vertex, float _weight){
+void LMESolver::addAnchor(int _vertex, MyMesh &_mesh){
     //add the handle to our laplace matrix
     m_laplaceMatrix.conservativeResize(m_laplaceMatrix.rows()+1,m_laplaceMatrix.cols());
-    m_laplaceMatrix.coeffRef(m_laplaceMatrix.rows()-1,_vertex) = _weight;
+    m_laplaceMatrix.coeffRef(m_laplaceMatrix.rows()-1,_vertex) = 1.0;
+    //add the index to our anchor list so we know where it is
+    anchorInfo aInfo;
+    aInfo.matIdx = m_laplaceMatrix.rows()-1;
+    aInfo.vertIdx = _vertex;
+    m_anchorList.push_back(aInfo);
+
+    MyMesh::VertexIter v_it=_mesh.vertices_begin();
+    //iterate to our vertex in our mesh
+    for(int i=0;i<_vertex;i++)
+        v_it++;
+
+    MyMesh::Point vertPos = _mesh.point( *v_it );
+//    std::cout<<"vert position "<<vertPos[0]<<","<<vertPos[1]<<","<<vertPos[2]<<std::endl;
+    //add the handle to our delta matrix
+    m_delta.conservativeResize(m_delta.rows()+1,m_delta.cols());
+    m_delta.coeffRef(m_delta.rows()-1,0) = vertPos[0];
+    m_delta.coeffRef(m_delta.rows()-1,1) = vertPos[1];
+    m_delta.coeffRef(m_delta.rows()-1,2) = vertPos[2];
+
+    std::cout<<"anchor added, vert no "<<_vertex<<" pos "<<vertPos[0]<<","<<vertPos[1]<<","<<vertPos[2]<<std::endl;
+    //change the color of our vertex to match the weight
+    MyMesh::Color vertColor = _mesh.color( *v_it );
+    //make our anchored verts red
+    vertColor[1] = 0.0;
+    _mesh.set_color(*v_it, vertColor );
+
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+void LMESolver::addHandle(){
+    //add the handle to our laplace matrix
+    m_laplaceMatrix.conservativeResize(m_laplaceMatrix.rows()+1,m_laplaceMatrix.cols());
+    //add to our handle list so we know what its idx is
+    handleInfo hInfo;
+    hInfo.matIdx = m_laplaceMatrix.rows()-1;
+    hInfo.numVerts = 0;
+    m_handleList.push_back(hInfo);
 
     //add the handle to our delta matrix
     m_delta.conservativeResize(m_delta.rows()+1,m_delta.cols());
-    m_delta.coeffRef(m_delta.rows()-1,0) = m_OGVertex[_vertex].m_x;
-    m_delta.coeffRef(m_delta.rows()-1,1) = m_OGVertex[_vertex].m_y;
-    m_delta.coeffRef(m_delta.rows()-1,2) = m_OGVertex[_vertex].m_z;
-
-    //add our ID to our id array
-    m_handleID.push_back(_vertex);
 }
 //----------------------------------------------------------------------------------------------------------------------
-void LMESolver::moveHandle(int _handleId, ngl::Vec3 _pos){
-    int handleLoc;
+void LMESolver::editLastHandle(int _vertex, float _weight, MyMesh &_mesh){
+    //add the weight to our laplace matrix
+    m_laplaceMatrix.coeffRef(m_laplaceMatrix.rows()-1, _vertex) = _weight;
+
+    MyMesh::VertexIter v_it=_mesh.vertices_begin();
+    //iterate to our vertex in our mesh
+    for(int i=0;i<_vertex;i++)
+        v_it++;
+
+    //add this to our
+    MyMesh::Point vertPos = _mesh.point( *v_it );
+
+    std::cout<<"vertPos "<<vertPos[0]<<","<<vertPos[1]<<","<<vertPos<<std::endl;
+
+    vertPos*=_weight;
+
+
+    MyMesh::Point currentDelta;
+    currentDelta[0] = m_delta.coeff(m_delta.rows()-1,0);
+    currentDelta[1] = m_delta.coeff(m_delta.rows()-1,1);
+    currentDelta[2] = m_delta.coeff(m_delta.rows()-1,2);
+
+    currentDelta*=(float)m_handleList[m_handleList.size()-1].numVerts;
+    m_handleList[m_handleList.size()-1].numVerts++;
+
+    vertPos+=currentDelta;
+
+    vertPos/=(float)m_handleList[m_handleList.size()-1].numVerts;
+
+    m_delta.coeffRef(m_delta.rows()-1,0) = vertPos[0];
+    m_delta.coeffRef(m_delta.rows()-1,1) = vertPos[1];
+    m_delta.coeffRef(m_delta.rows()-1,2) = vertPos[2];
+
+    std::cout<<"new Delta "<<vertPos[0]<<","<<vertPos[1]<<","<<vertPos<<std::endl<<std::endl;
+
+    //change the color of our vertex to match the weight
+    MyMesh::Color vertColor = _mesh.color( *v_it );
+    vertColor[2] = _weight;
+    _mesh.set_color(*v_it, vertColor );
+
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+void LMESolver::moveHandle(int _handleNo, ngl::Vec3 _trans){
+    int handleIdx;
     //find the location of our handle in our delta matrix
-    for(unsigned int i=0;i<m_handleID.size();i++){
-        if(m_handleID[i]==_handleId){
-            handleLoc=i;
-            continue;
-        }
-    }
+    handleIdx = m_handleList[_handleNo].matIdx;
 
     //change the posision of our handle in our delta matrix
-    m_delta.coeffRef(m_OGVertex.size()+handleLoc,0) = _pos.m_x;
-    m_delta.coeffRef(m_OGVertex.size()+handleLoc,1) = _pos.m_y;
-    m_delta.coeffRef(m_OGVertex.size()+handleLoc,2) = _pos.m_z;
+    m_delta.coeffRef(handleIdx,0) += _trans.m_x;
+    m_delta.coeffRef(handleIdx,1) += _trans.m_y;
+    m_delta.coeffRef(handleIdx,2) += _trans.m_z;
 
 }
 

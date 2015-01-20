@@ -35,11 +35,21 @@ public:
     //----------------------------------------------------------------------------------------------------------------------
     LMESolver(std::vector<ngl::Vec3> _points);
     //----------------------------------------------------------------------------------------------------------------------
-    /// @brief adds handles to our matricies for deformation
-    /// @param _vertex - which vertex in our array points we wish to add a handle to (not idea managment but ok for this demo)
-    /// @param _weight - the weight of influence you wish to add to this vertex
+    /// @brief adds a anchor to our matricies, much like addHandle but weight is always 1
+    /// @param _vertex - our vertex index
     //----------------------------------------------------------------------------------------------------------------------
-    void addHandle(int _vertex, float _weight);
+    void addAnchor(int _vertex, MyMesh &_mesh);
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief adds a blank handle to our matricies
+    //----------------------------------------------------------------------------------------------------------------------
+    void addHandle();
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief edits the latest handle added to out matricies
+    /// @param _vertex - the index of the vertex we wish to add to our handle
+    /// @param _weight - the weight we wish the handle to hold on this vertex
+    /// @param _mesh - the mesh that holds our vertex information
+    //----------------------------------------------------------------------------------------------------------------------
+    void editLastHandle(int _vertex, float _weight, MyMesh &_mesh);
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief our function to calculate our new points from our matricies
     //----------------------------------------------------------------------------------------------------------------------
@@ -47,7 +57,7 @@ public:
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief a function to move our handles
     //----------------------------------------------------------------------------------------------------------------------
-    void moveHandle(int _handleId, ngl::Vec3 _pos);
+    void moveHandle(int _handleNo, ngl::Vec3 _trans);
     //----------------------------------------------------------------------------------------------------------------------
 protected:
     //----------------------------------------------------------------------------------------------------------------------
@@ -84,7 +94,30 @@ private:
     //----------------------------------------------------------------------------------------------------------------------
     std::vector<int> m_handleID;
     //----------------------------------------------------------------------------------------------------------------------
-
+    /// @brief a structure to hold our anchor information
+    //----------------------------------------------------------------------------------------------------------------------
+    struct anchorInfo{
+        int matIdx;
+        int vertIdx;
+    };
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief a list of all our achors and the index's of the vertex's they belong to
+    //----------------------------------------------------------------------------------------------------------------------
+    std::vector< anchorInfo > m_anchorList;
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief a structure to hold our handle information
+    //----------------------------------------------------------------------------------------------------------------------
+    struct handleInfo{
+        int matIdx;
+        int numVerts;
+    };
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief a list of all our handles idx's in our matricies our how many verts are used in our handle
+    /// @brief m_handleList.first is the idx of the handle in our array
+    /// @brief m_handleList.second is the number of verts that are in our handle
+    //----------------------------------------------------------------------------------------------------------------------
+    std::vector< handleInfo > m_handleList;
+    //----------------------------------------------------------------------------------------------------------------------
 };
 
 #endif // LMESolver_H
