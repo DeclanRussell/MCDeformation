@@ -32,7 +32,7 @@ OpenGLWidget::OpenGLWidget(const QGLFormat _format, QWidget *_parent) : QGLWidge
     m_spinYFace=0;
     m_modelPos=ngl::Vec3(0.0);
     m_handlesAdded=false;
-    m_addAnchors = true;
+    m_addAnchors = false;
     m_addHandles = false;
     // re-size the widget to that of the parent (in this case the GLFrame passed in on construction)
     this->resize(_parent->size());
@@ -89,8 +89,6 @@ void OpenGLWidget::initializeGL(){
     shader->setShaderParam3f("Ks",1.0,1.0,1.0);
     shader->setShaderParam1f("shininess",100.0);
 
-    (*shader)["nglDiffuseShader"]->use();
-    shader->setShaderParam4f("Colour",1,1,1,1);
 
     (*shader)["nglDiffuseShader"]->use();
     shader->setShaderParam4f("Colour",1,1,0,1);
@@ -107,8 +105,8 @@ void OpenGLWidget::initializeGL(){
     // Now we will create a basic Camera from the graphics library
     // This is a static camera so it only needs to be set once
     // First create Values for the camera position
-    ngl::Vec3 from(0,5,20);
-    ngl::Vec3 to(0,5,0);
+    ngl::Vec3 from(0,0,10);
+    ngl::Vec3 to(0,0,0);
     ngl::Vec3 up(0,1,0);
     m_cam= new ngl::Camera(from,to,up);
     // set the shape using FOV 45 Aspect Ratio based on Width and Height
@@ -125,8 +123,9 @@ void OpenGLWidget::initializeGL(){
 
 
     //lets import our mesh
-    m_importedMesh = new ImportMesh("models/pikatchu.obj");
-//    m_importedMesh = new ImportMesh("models/sphere.obj");
+//    m_importedMesh = new ImportMesh("models/pikatchu.obj");
+    m_importedMesh = new ImportMesh("models/sphere.obj");
+//    m_importedMesh = new ImportMesh("models/newteapot.obj");
     m_LMESolver = new LMESolver(m_importedMesh->getMeshPtr());
     //lets make a circle
     for(unsigned int i=0; i<m_importedMesh->m_vertPositions.size(); i++){
@@ -135,10 +134,6 @@ void OpenGLWidget::initializeGL(){
         m_selectables.push_back(sel);
     }
 
-    // create our text renderer
-    m_text = new ngl::Text(QFont("Arial",14));
-    m_text->setColour(255,0,0);
-    m_text->setScreenSize(width(),height());
 
     startTimer(0);
 
@@ -177,16 +172,10 @@ void OpenGLWidget::paintGL(){
 
     m_importedMesh->draw(m_mouseGlobalTX,m_cam);
     //m_modelMatrix = m_mouseGlobalTX;
-    for(unsigned int i=0; i<m_selectables.size(); i++){
-        m_selectables[i]->draw(m_mouseGlobalTX,m_cam);
-    }
-    if(!m_handlesAdded){
-        m_text->renderText(5,5,QString("Please selected your handles and click enter to add them :)"));
-    }
-    else{
-        m_text->setColour(0.0,255,0.0);
-        m_text->renderText(5,5,QString("All's good! feel free to select your handles and move them :)"));
-    }
+//    for(unsigned int i=0; i<m_selectables.size(); i++){
+//        m_selectables[i]->draw(m_mouseGlobalTX,m_cam);
+//    }
+
 }
 //----------------------------------------------------------------------------------------------------------------------
 ngl::Vec3 OpenGLWidget::createRay(int _mouseX, int _mouseY){
@@ -215,25 +204,30 @@ ngl::Vec3 OpenGLWidget::createRay(int _mouseX, int _mouseY){
     //return our ray
     return ray_wor;
 }
+//----------------------------------------------------------------------------------------------------------------------
+void OpenGLWidget::addAnchors(){
+    if(m_addHandles) m_addHandles = false;
+    m_addAnchors = true;
+}
+//----------------------------------------------------------------------------------------------------------------------
+void OpenGLWidget::setAnchors(){
+    m_addAnchors = false;
+}
+//----------------------------------------------------------------------------------------------------------------------
+void OpenGLWidget::addHandle(){
+    if(m_addAnchors) m_addHandles = false;
+    m_addHandles = true;
+    m_handleSelectors.push_back(new selectable(ngl::Vec3(0),m_handleSelectors.size(),0.2));
+    m_curSelectedHandle = m_handleSelectors[m_handleSelectors.size()-1];
+}
+//----------------------------------------------------------------------------------------------------------------------
+void OpenGLWidget::setHandle(){
+    m_addHandles=false;
+}
 
 //----------------------------------------------------------------------------------------------------------------------
 void OpenGLWidget::keyPressEvent(QKeyEvent *_event){
-    if(_event->key()==Qt::Key_Return){
-        //will be changed later so you can do this with buttons
-        if(m_addAnchors){
-            m_addAnchors=false;
-            m_addHandles=true;
-            m_LMESolver->addHandle();
-            std::vector<ngl::Vec3> newVerts = m_LMESolver->calculatePoints();
-            for(unsigned int i=0;i<m_selectables.size();i++){
-                m_selectables[i]->setPos(newVerts[i]);
-            }
-        }
-        else if(m_addHandles){
-            m_addHandles = false;
-            m_handlesAdded = true;
-        }
-    }
+
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -244,15 +238,38 @@ void OpenGLWidget::mouseMoveEvent (QMouseEvent * _event)
   // pressed when the mousePress/Release event is generated
   if(m_movePoint && _event->buttons() == Qt::LeftButton)
   {
+
+    // create the rotation matrices
+    ngl::Mat4 rotX;
+    ngl::Mat4 rotY;
+    rotX.rotateX(m_spinXFace);
+    rotY.rotateY(m_spinYFace);
+    //create our axis
+    ngl::Vec4 forwards = m_cam->getLook() - m_cam->getEye();
+    forwards.normalize();
+    ngl::Vec4 up = m_cam->getUp();
+    up = rotX * up;
+    up.normalize();
+    ngl::Vec4 right = up.cross(forwards);
+    right = rotY * right;
+    right.normalize();
+
+
     int diffx=_event->x()-m_origX;
     int diffy=_event->y()-m_origY;
-    ngl::Vec3 diff(diffx,diffy * -1.0,0.0);
+    right*=-diffx;
+    up*=-diffy;
+    ngl::Vec4 sumTrans = right + up;
+    ngl::Vec3 diff(sumTrans.m_x,sumTrans.m_y,sumTrans.m_z);
     diff.normalize();
     diff*=0.1;
-
-    if(m_handlesAdded){
-        m_LMESolver->moveHandle(0,diff);
-        std::vector<ngl::Vec3> newVerts = m_LMESolver->calculatePoints();
+    std::cout<<"moving"<<std::endl;
+    if(m_handleSelectors.size()>0){
+        for(int i=0; i<m_curSelectedHandle->m_handles.size();i++){
+            std::cout<<"handle no "<<m_curSelectedHandle->m_handles[i]<<std::endl;
+            m_LMESolver->moveHandle(m_curSelectedHandle->m_handles[i],diff);
+        }
+        std::vector<ngl::Vec3> newVerts = m_LMESolver->calculatePoints(m_importedMesh->getMeshPtr());
         for(unsigned int i=0;i<m_selectables.size();i++){
             m_selectables[i]->setPos(newVerts[i]);
         }
@@ -293,34 +310,39 @@ void OpenGLWidget::mousePressEvent ( QMouseEvent * _event)
     m_rotate =true;
   }
   else if(_event->button() == Qt::LeftButton){
-      m_origX = _event->x();
-      m_origY = _event->y();
-      m_movePoint = true;
-      ngl::Vec3 ray = createRay(_event->x(),_event->y());
-      for(unsigned int i=0; i<m_selectables.size();i++){
-        //if selection has been made add it as an anchor
-        if(m_addAnchors){
+      if(m_addAnchors || m_addHandles){
+          int handleNo;
+          ngl::Vec3 ray = createRay(_event->x(),_event->y());
+          for(unsigned int i=0; i<m_selectables.size();i++){
+            //if selection has been made add it as an anchor
+            if(m_addAnchors){
 
-            if(m_selectables[i]->testSelection(ray,m_mouseGlobalTX, m_cam)){
-                m_LMESolver->addAnchor(m_selectables[i]->getID(),m_importedMesh->getMeshPtr());
-                m_selectables[i]->isSelectable(false);
+                if(m_selectables[i]->testSelection(ray,m_mouseGlobalTX, m_cam)){
+                    m_LMESolver->addAnchor(m_selectables[i]->getID(),m_importedMesh->getMeshPtr());
+                    m_selectables[i]->isSelectable(false);
+                }
             }
-        }
-        if(m_addHandles){
-            if(m_selectables[i]->testSelection(ray,m_mouseGlobalTX, m_cam)){
-                m_LMESolver->editLastHandle(m_selectables[i]->getID(),1.0,m_importedMesh->getMeshPtr());
+            if(m_addHandles){
+                if(m_selectables[i]->testSelection(ray,m_mouseGlobalTX, m_cam)){
+                    handleNo = m_LMESolver->addHandle(m_selectables[i]->getID(),m_importedMesh->getMeshPtr());
+                    m_curSelectedHandle->m_handles.push_back(handleNo);
+                    m_selectables[i]->isSelectable(false);
+                }
             }
-        }
+          }
+      }
+      else{
+        m_origX = _event->x();
+        m_origY = _event->y();
+        m_movePoint = true;
       }
   }
   // right mouse translate mode
   else if(_event->button() == Qt::RightButton)
   {
-    m_origX = _event->x();
-    m_origY = _event->y();
     m_origXPos = _event->x();
     m_origYPos = _event->y();
-    m_rotate=true;
+    m_translate=true;
   }
 
 
@@ -341,7 +363,7 @@ void OpenGLWidget::mouseReleaseEvent ( QMouseEvent * _event )
         // right mouse translate mode
   if (_event->button() == Qt::RightButton)
   {
-    m_rotate=false;
+    m_translate=false;
   }
 }
 //----------------------------------------------------------------------------------------------------------------------
@@ -349,14 +371,15 @@ void OpenGLWidget::wheelEvent(QWheelEvent *_event)
 {
 
     // check the diff of the wheel position (0 means no change)
-    if(!m_rotate)
-    if(_event->delta() > 0)
-    {
-        m_modelPos.m_z+=ZOOM;
-    }
-    else if(_event->delta() <0 )
-    {
-        m_modelPos.m_z-=ZOOM;
+    if(!m_rotate){
+        if(_event->delta() > 0)
+        {
+            m_modelPos.m_z+=ZOOM;
+        }
+        else if(_event->delta() <0 )
+        {
+            m_modelPos.m_z-=ZOOM;
+        }
     }
     updateGL();
 }

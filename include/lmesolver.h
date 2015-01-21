@@ -41,19 +41,14 @@ public:
     void addAnchor(int _vertex, MyMesh &_mesh);
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief adds a blank handle to our matricies
+    /// @param _mesh - the mesh we wish to paint our handle onto
+    /// @return returns the index of our handle in our handle list
     //----------------------------------------------------------------------------------------------------------------------
-    void addHandle();
-    //----------------------------------------------------------------------------------------------------------------------
-    /// @brief edits the latest handle added to out matricies
-    /// @param _vertex - the index of the vertex we wish to add to our handle
-    /// @param _weight - the weight we wish the handle to hold on this vertex
-    /// @param _mesh - the mesh that holds our vertex information
-    //----------------------------------------------------------------------------------------------------------------------
-    void editLastHandle(int _vertex, float _weight, MyMesh &_mesh);
+    int addHandle(int _vertex, MyMesh &_mesh);
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief our function to calculate our new points from our matricies
     //----------------------------------------------------------------------------------------------------------------------
-    std::vector<ngl::Vec3> calculatePoints();
+    std::vector<ngl::Vec3> calculatePoints(MyMesh &_mesh);
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief a function to move our handles
     //----------------------------------------------------------------------------------------------------------------------
@@ -106,17 +101,17 @@ private:
     std::vector< anchorInfo > m_anchorList;
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief a structure to hold our handle information
+    /// @brief matIdx - the index in which our handle is loacted
+    /// @brief vertIdx - the vertex index in our matrix
     //----------------------------------------------------------------------------------------------------------------------
     struct handleInfo{
         int matIdx;
-        int numVerts;
+        int vertIdx;
     };
     //----------------------------------------------------------------------------------------------------------------------
-    /// @brief a list of all our handles idx's in our matricies our how many verts are used in our handle
-    /// @brief m_handleList.first is the idx of the handle in our array
-    /// @brief m_handleList.second is the number of verts that are in our handle
+    /// @brief a list of all our handles idx's in our matricies and the index of the vertex is effects
     //----------------------------------------------------------------------------------------------------------------------
-    std::vector< handleInfo > m_handleList;
+    std::vector<handleInfo> m_handleList;
     //----------------------------------------------------------------------------------------------------------------------
 };
 

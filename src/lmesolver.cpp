@@ -174,22 +174,18 @@ void LMESolver::addAnchor(int _vertex, MyMesh &_mesh){
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-void LMESolver::addHandle(){
-    //add the handle to our laplace matrix
+int LMESolver::addHandle(int _vertex, MyMesh &_mesh){
+    //make some more room in out matricies
     m_laplaceMatrix.conservativeResize(m_laplaceMatrix.rows()+1,m_laplaceMatrix.cols());
+    m_delta.conservativeResize(m_delta.rows()+1,m_delta.cols()+1);
     //add to our handle list so we know what its idx is
     handleInfo hInfo;
     hInfo.matIdx = m_laplaceMatrix.rows()-1;
-    hInfo.numVerts = 0;
+    hInfo.vertIdx = _vertex;
     m_handleList.push_back(hInfo);
 
-    //add the handle to our delta matrix
-    m_delta.conservativeResize(m_delta.rows()+1,m_delta.cols());
-}
-//----------------------------------------------------------------------------------------------------------------------
-void LMESolver::editLastHandle(int _vertex, float _weight, MyMesh &_mesh){
-    //add the weight to our laplace matrix
-    m_laplaceMatrix.coeffRef(m_laplaceMatrix.rows()-1, _vertex) = _weight;
+    //add our handle to our matrix
+    m_laplaceMatrix.coeffRef(m_laplaceMatrix.rows()-1, _vertex) = 1.0;
 
     MyMesh::VertexIter v_it=_mesh.vertices_begin();
     //iterate to our vertex in our mesh
@@ -201,33 +197,19 @@ void LMESolver::editLastHandle(int _vertex, float _weight, MyMesh &_mesh){
 
     std::cout<<"vertPos "<<vertPos[0]<<","<<vertPos[1]<<","<<vertPos<<std::endl;
 
-    vertPos*=_weight;
-
-
-    MyMesh::Point currentDelta;
-    currentDelta[0] = m_delta.coeff(m_delta.rows()-1,0);
-    currentDelta[1] = m_delta.coeff(m_delta.rows()-1,1);
-    currentDelta[2] = m_delta.coeff(m_delta.rows()-1,2);
-
-    currentDelta*=(float)m_handleList[m_handleList.size()-1].numVerts;
-    m_handleList[m_handleList.size()-1].numVerts++;
-
-    vertPos+=currentDelta;
-
-    vertPos/=(float)m_handleList[m_handleList.size()-1].numVerts;
-
     m_delta.coeffRef(m_delta.rows()-1,0) = vertPos[0];
     m_delta.coeffRef(m_delta.rows()-1,1) = vertPos[1];
     m_delta.coeffRef(m_delta.rows()-1,2) = vertPos[2];
 
-    std::cout<<"new Delta "<<vertPos[0]<<","<<vertPos[1]<<","<<vertPos<<std::endl<<std::endl;
-
     //change the color of our vertex to match the weight
     MyMesh::Color vertColor = _mesh.color( *v_it );
-    vertColor[2] = _weight;
+    vertColor[2] = 1.0;
     _mesh.set_color(*v_it, vertColor );
 
+    std::cout<<"handle list size "<<m_handleList.size()<<std::endl;
+    return (m_handleList.size()-1);
 }
+
 
 //----------------------------------------------------------------------------------------------------------------------
 void LMESolver::moveHandle(int _handleNo, ngl::Vec3 _trans){
@@ -243,7 +225,7 @@ void LMESolver::moveHandle(int _handleNo, ngl::Vec3 _trans){
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-std::vector<ngl::Vec3> LMESolver::calculatePoints(){
+std::vector<ngl::Vec3> LMESolver::calculatePoints(MyMesh &_mesh){
 
 
 //    Eigen::SimplicialCholeskyLDLT<Eigen::SparseMatrix<double> > solver;
@@ -270,11 +252,17 @@ std::vector<ngl::Vec3> LMESolver::calculatePoints(){
         std::cout<<"oh balls it failed"<<std::endl;
     }
     //std::cout<<final<<std::endl;
-
+    MyMesh::VertexIter v_it=_mesh.vertices_begin();
+    MyMesh::Point currentPoint;
     std::vector<ngl::Vec3> returnPoints;
     returnPoints.resize(final.rows());
     for(int i=0;i<final.rows();i++){
         returnPoints[i] = ngl::Vec3(final.coeff(i,0),final.coeff(i,1),final.coeff(i,2));
+        currentPoint[0] = returnPoints[i].m_x;
+        currentPoint[1] = returnPoints[i].m_y;
+        currentPoint[2] = returnPoints[i].m_z;
+        _mesh.set_point(*v_it,currentPoint);
+        ++v_it;
     }
     return returnPoints;
 }

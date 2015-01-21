@@ -38,13 +38,16 @@ bool selectable::testSelection(ngl::Vec3 _ray, ngl::Mat4 _mouseGlobalTX, ngl::Ca
     if(!m_isSelectable)
         return false;
 
-
-
     //now to calculate if we intersect with out sphere
     ngl::Vec4 pos4(m_pos);
     pos4.m_w = 1.0;
     ngl::Mat4 modelTrans = _mouseGlobalTX.inverse();
     ngl::Vec4 posTX = modelTrans * pos4;
+    //add the translation for some reason our transform matrix isnt doing this :(
+    posTX.m_x +=_mouseGlobalTX.m_m[3][0];
+    posTX.m_y +=_mouseGlobalTX.m_m[3][1];
+    posTX.m_z +=_mouseGlobalTX.m_m[3][2];
+
     ngl::Vec3 posTX3(posTX.m_x,posTX.m_y,posTX.m_z);
     ngl::Vec3 camPos(_cam->getEye().m_x,_cam->getEye().m_y,_cam->getEye().m_z);
     float b = _ray.dot(posTX3 - camPos);
