@@ -559,6 +559,18 @@ moc/moc_mainwindow.cpp: /opt/Qt/5.2.1/gcc_64/include/QtWidgets/QMainWindow \
 		/opt/Qt/5.2.1/gcc_64/include/QtGui/qtouchdevice.h \
 		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qtabwidget.h \
 		/opt/Qt/5.2.1/gcc_64/include/QtGui/qicon.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/QPushButton \
+		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qpushbutton.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qabstractbutton.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/QGroupBox \
+		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qgroupbox.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qframe.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/QGridLayout \
+		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qgridlayout.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qlayout.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qlayoutitem.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qboxlayout.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/QSpacerItem \
 		include/OpenGLWidget.h \
 		/opt/Qt/5.2.1/gcc_64/include/QtOpenGL/QGLWidget \
 		/opt/Qt/5.2.1/gcc_64/include/QtOpenGL/qgl.h \
@@ -591,12 +603,8 @@ moc/moc_mainwindow.cpp: /opt/Qt/5.2.1/gcc_64/include/QtWidgets/QMainWindow \
 		/home/dexternation/NGL/include/ngl/Vec3.h \
 		/home/dexternation/NGL/include/ngl/RibExport.h \
 		/home/dexternation/NGL/include/ngl/Plane.h \
-		/home/dexternation/NGL/include/ngl/Text.h \
-		/home/dexternation/NGL/include/ngl/Colour.h \
-		/home/dexternation/NGL/include/ngl/VertexArrayObject.h \
-		/opt/Qt/5.2.1/gcc_64/include/QtCore/QHash \
-		/opt/Qt/5.2.1/gcc_64/include/QtGui/QFont \
 		include/selectable.h \
+		/home/dexternation/NGL/include/ngl/VertexArrayObject.h \
 		include/lmesolver.h \
 		include/importmesh.h \
 		include/mainwindow.h
@@ -740,12 +748,8 @@ moc/moc_OpenGLWidget.cpp: /opt/Qt/5.2.1/gcc_64/include/QtOpenGL/QGLWidget \
 		/home/dexternation/NGL/include/ngl/Vec3.h \
 		/home/dexternation/NGL/include/ngl/RibExport.h \
 		/home/dexternation/NGL/include/ngl/Plane.h \
-		/home/dexternation/NGL/include/ngl/Text.h \
-		/home/dexternation/NGL/include/ngl/Colour.h \
-		/home/dexternation/NGL/include/ngl/VertexArrayObject.h \
-		/opt/Qt/5.2.1/gcc_64/include/QtCore/QHash \
-		/opt/Qt/5.2.1/gcc_64/include/QtGui/QFont \
 		include/selectable.h \
+		/home/dexternation/NGL/include/ngl/VertexArrayObject.h \
 		include/lmesolver.h \
 		include/importmesh.h \
 		include/OpenGLWidget.h
@@ -888,6 +892,18 @@ obj/main.o: src/main.cpp /opt/Qt/5.2.1/gcc_64/include/QtWidgets/QApplication \
 		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qmainwindow.h \
 		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qtabwidget.h \
 		/opt/Qt/5.2.1/gcc_64/include/QtGui/qicon.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/QPushButton \
+		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qpushbutton.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qabstractbutton.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/QGroupBox \
+		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qgroupbox.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qframe.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/QGridLayout \
+		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qgridlayout.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qlayout.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qlayoutitem.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qboxlayout.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/QSpacerItem \
 		include/OpenGLWidget.h \
 		/opt/Qt/5.2.1/gcc_64/include/QtOpenGL/QGLWidget \
 		/opt/Qt/5.2.1/gcc_64/include/QtOpenGL/qgl.h \
@@ -920,12 +936,8 @@ obj/main.o: src/main.cpp /opt/Qt/5.2.1/gcc_64/include/QtWidgets/QApplication \
 		/home/dexternation/NGL/include/ngl/Vec3.h \
 		/home/dexternation/NGL/include/ngl/RibExport.h \
 		/home/dexternation/NGL/include/ngl/Plane.h \
-		/home/dexternation/NGL/include/ngl/Text.h \
-		/home/dexternation/NGL/include/ngl/Colour.h \
-		/home/dexternation/NGL/include/ngl/VertexArrayObject.h \
-		/opt/Qt/5.2.1/gcc_64/include/QtCore/QHash \
-		/opt/Qt/5.2.1/gcc_64/include/QtGui/QFont \
 		include/selectable.h \
+		/home/dexternation/NGL/include/ngl/VertexArrayObject.h \
 		include/lmesolver.h \
 		include/importmesh.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/main.o src/main.cpp
@@ -1042,6 +1054,18 @@ obj/mainwindow.o: src/mainwindow.cpp include/mainwindow.h \
 		/opt/Qt/5.2.1/gcc_64/include/QtGui/qtouchdevice.h \
 		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qtabwidget.h \
 		/opt/Qt/5.2.1/gcc_64/include/QtGui/qicon.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/QPushButton \
+		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qpushbutton.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qabstractbutton.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/QGroupBox \
+		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qgroupbox.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qframe.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/QGridLayout \
+		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qgridlayout.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qlayout.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qlayoutitem.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qboxlayout.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/QSpacerItem \
 		include/OpenGLWidget.h \
 		/opt/Qt/5.2.1/gcc_64/include/QtOpenGL/QGLWidget \
 		/opt/Qt/5.2.1/gcc_64/include/QtOpenGL/qgl.h \
@@ -1074,12 +1098,8 @@ obj/mainwindow.o: src/mainwindow.cpp include/mainwindow.h \
 		/home/dexternation/NGL/include/ngl/Vec3.h \
 		/home/dexternation/NGL/include/ngl/RibExport.h \
 		/home/dexternation/NGL/include/ngl/Plane.h \
-		/home/dexternation/NGL/include/ngl/Text.h \
-		/home/dexternation/NGL/include/ngl/Colour.h \
-		/home/dexternation/NGL/include/ngl/VertexArrayObject.h \
-		/opt/Qt/5.2.1/gcc_64/include/QtCore/QHash \
-		/opt/Qt/5.2.1/gcc_64/include/QtGui/QFont \
 		include/selectable.h \
+		/home/dexternation/NGL/include/ngl/VertexArrayObject.h \
 		include/lmesolver.h \
 		include/importmesh.h \
 		include/ui_mainwindow.h \
@@ -1096,16 +1116,10 @@ obj/mainwindow.o: src/mainwindow.cpp include/mainwindow.h \
 		/opt/Qt/5.2.1/gcc_64/include/QtGui/qinputmethod.h \
 		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/QButtonGroup \
 		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qbuttongroup.h \
-		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/QGridLayout \
-		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qgridlayout.h \
-		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qlayout.h \
-		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qlayoutitem.h \
-		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qboxlayout.h \
 		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/QHeaderView \
 		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qheaderview.h \
 		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qabstractitemview.h \
 		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qabstractscrollarea.h \
-		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qframe.h \
 		/opt/Qt/5.2.1/gcc_64/include/QtCore/qabstractitemmodel.h \
 		/opt/Qt/5.2.1/gcc_64/include/QtCore/qitemselectionmodel.h \
 		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
@@ -1121,7 +1135,6 @@ obj/mainwindow.o: src/mainwindow.cpp include/mainwindow.h \
 		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/QMenuBar \
 		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qmenubar.h \
 		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qmenu.h \
-		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/QSpacerItem \
 		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/QStatusBar \
 		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/qstatusbar.h \
 		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/QWidget \
@@ -1275,12 +1288,8 @@ obj/OpenGLWidget.o: src/OpenGLWidget.cpp /opt/Qt/5.2.1/gcc_64/include/QtGui/QGui
 		/home/dexternation/NGL/include/ngl/Vec3.h \
 		/home/dexternation/NGL/include/ngl/RibExport.h \
 		/home/dexternation/NGL/include/ngl/Plane.h \
-		/home/dexternation/NGL/include/ngl/Text.h \
-		/home/dexternation/NGL/include/ngl/Colour.h \
-		/home/dexternation/NGL/include/ngl/VertexArrayObject.h \
-		/opt/Qt/5.2.1/gcc_64/include/QtCore/QHash \
-		/opt/Qt/5.2.1/gcc_64/include/QtGui/QFont \
 		include/selectable.h \
+		/home/dexternation/NGL/include/ngl/VertexArrayObject.h \
 		include/lmesolver.h \
 		include/importmesh.h \
 		/home/dexternation/NGL/include/ngl/NGLInit.h \
@@ -1288,6 +1297,7 @@ obj/OpenGLWidget.o: src/OpenGLWidget.cpp /opt/Qt/5.2.1/gcc_64/include/QtGui/QGui
 		/opt/Qt/5.2.1/gcc_64/include/QtCore/QMutexLocker \
 		/home/dexternation/NGL/include/ngl/VAOPrimitives.h \
 		/home/dexternation/NGL/include/ngl/ShaderLib.h \
+		/home/dexternation/NGL/include/ngl/Colour.h \
 		/home/dexternation/NGL/include/ngl/Shader.h \
 		/home/dexternation/NGL/include/ngl/ShaderProgram.h \
 		/home/dexternation/NGL/include/ngl/Util.h \
@@ -1700,6 +1710,7 @@ obj/importmesh.o: src/importmesh.cpp include/importmesh.h \
 		/home/dexternation/NGL/include/ngl/Vec3.h \
 		/home/dexternation/NGL/include/ngl/RibExport.h \
 		/home/dexternation/NGL/include/ngl/Plane.h \
+		/home/dexternation/NGL/include/ngl/VertexArrayObject.h \
 		/home/dexternation/NGL/include/ngl/ShaderLib.h \
 		/home/dexternation/NGL/include/ngl/Colour.h \
 		/home/dexternation/NGL/include/ngl/Shader.h \
@@ -1710,8 +1721,7 @@ obj/importmesh.o: src/importmesh.cpp include/importmesh.h \
 		/home/dexternation/NGL/include/ngl/Mat3.h \
 		/home/dexternation/NGL/include/ngl/Transformation.h \
 		/home/dexternation/NGL/include/ngl/NGLassert.h \
-		/home/dexternation/NGL/include/ngl/VAOPrimitives.h \
-		/home/dexternation/NGL/include/ngl/VertexArrayObject.h
+		/home/dexternation/NGL/include/ngl/VAOPrimitives.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/importmesh.o src/importmesh.cpp
 
 obj/moc_mainwindow.o: moc/moc_mainwindow.cpp 

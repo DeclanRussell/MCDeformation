@@ -68,15 +68,19 @@ void OpenGLWidget::initializeGL(){
     shader->createShaderProgram("DeformationShader");
     //add our shaders
     shader->attachShader("DeformationVert",ngl::VERTEX);
+    shader->attachShader("DeformationGeom",ngl::GEOMETRY);
     shader->attachShader("DeformationFrag",ngl::FRAGMENT);
     //load the source
     shader->loadShaderSource("DeformationVert","shaders/DeformationVert.glsl");
+    shader->loadShaderSource("DeformationGeom","shaders/DeformationGeom.glsl");
     shader->loadShaderSource("DeformationFrag","shaders/DeformationFrag.glsl");
     //compile them
     shader->compileShader("DeformationVert");
+    shader->compileShader("DeformationGeom");
     shader->compileShader("DeformationFrag");
     //attach them to our program
     shader->attachShaderToProgram("DeformationShader","DeformationVert");
+    shader->attachShaderToProgram("DeformationShader","DeformationGeom");
     shader->attachShaderToProgram("DeformationShader","DeformationFrag");
     //link our shader to opengl
     shader->linkProgramObject("DeformationShader");

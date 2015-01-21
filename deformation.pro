@@ -67,4 +67,5 @@ FORMS += \
 
 OTHER_FILES += \
     shaders/DeformationFrag.glsl \
-    shaders/DeformationVert.glsl
+    shaders/DeformationVert.glsl \
+    shaders/DeformationGeom.glsl
