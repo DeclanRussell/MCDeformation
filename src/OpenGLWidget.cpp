@@ -317,23 +317,84 @@ void OpenGLWidget::mousePressEvent ( QMouseEvent * _event)
       if(m_addAnchors || m_addHandles){
           int handleNo;
           ngl::Vec3 ray = createRay(_event->x(),_event->y());
-          for(unsigned int i=0; i<m_selectables.size();i++){
             //if selection has been made add it as an anchor
-            if(m_addAnchors){
+        if(m_addAnchors){
+            std::vector<selectable *> intersect;
+            for(unsigned int i=0; i<m_selectables.size();i++){
+                if(m_selectables[i]->testSelection(ray,m_mouseGlobalTX, m_cam)){
+                    intersect.push_back(m_selectables[i]);
+                }
+            }
+            if(intersect.size()>0){
+                ngl::Mat4 modelTrans = m_mouseGlobalTX.inverse();
+                ngl::Vec3 pos;
+                ngl::Vec4 pos4;
+                ngl::Vec4 camPos = m_cam->getEye();
+                int currentClosest;
+                float smallestLength;
+                for(unsigned int i=0; i<intersect.size();i++){
+                    pos = intersect[i]->getPos();
+                    pos4 = ngl::Vec4(pos.m_x,pos.m_y,pos.m_z,1.0);
+                    pos4 = modelTrans * pos4;
+                    pos4.m_x +=m_mouseGlobalTX.m_m[3][0];
+                    pos4.m_y +=m_mouseGlobalTX.m_m[3][1];
+                    pos4.m_z +=m_mouseGlobalTX.m_m[3][2];
+                    if(i==0){
+                        currentClosest = i;
+                        smallestLength = (pos4 - camPos).length();
+                    }
+                    else{
+                        float length = (pos4 - m_cam->getEye()).length();
+                        if(length<smallestLength){
+                            currentClosest = i;
+                            smallestLength = length;
+                        }
+                    }
+                }
+                m_LMESolver->addAnchor(intersect[currentClosest]->getID(),m_importedMesh->getMeshPtr());
+                intersect[currentClosest]->isSelectable(false);
+            }
+        }
+        if(m_addHandles){
+            std::vector<selectable *> intersect;
+            for(unsigned int i=0; i<m_selectables.size();i++){
+                if(m_selectables[i]->testSelection(ray,m_mouseGlobalTX, m_cam)){
+                    intersect.push_back(m_selectables[i]);
+                }
+            }
+            if(intersect.size()>0){
+                ngl::Mat4 modelTrans = m_mouseGlobalTX.inverse();
+                ngl::Vec3 pos;
+                ngl::Vec4 pos4;
+                ngl::Vec4 camPos = m_cam->getEye();
+                int currentClosest;
+                float smallestLength;
+                for(unsigned int i=0; i<intersect.size();i++){
+                    pos = intersect[i]->getPos();
+                    pos4 = ngl::Vec4(pos.m_x,pos.m_y,pos.m_z,1.0);
+                    pos4 = modelTrans * pos4;
+                    pos4.m_x +=m_mouseGlobalTX.m_m[3][0];
+                    pos4.m_y +=m_mouseGlobalTX.m_m[3][1];
+                    pos4.m_z +=m_mouseGlobalTX.m_m[3][2];
+                    if(i==0){
+                        currentClosest = i;
+                        smallestLength = (pos4 - camPos).length();
+                    }
+                    else{
+                        float length = (pos4 - m_cam->getEye()).length();
+                        if(length<smallestLength){
+                            currentClosest = i;
+                            smallestLength = length;
+                        }
+                    }
+                }
+                handleNo = m_LMESolver->addHandle(intersect[currentClosest]->getID(),m_importedMesh->getMeshPtr());
+                m_curSelectedHandle->m_handles.push_back(handleNo);
+                intersect[currentClosest]->isSelectable(false);
 
-                if(m_selectables[i]->testSelection(ray,m_mouseGlobalTX, m_cam)){
-                    m_LMESolver->addAnchor(m_selectables[i]->getID(),m_importedMesh->getMeshPtr());
-                    m_selectables[i]->isSelectable(false);
-                }
             }
-            if(m_addHandles){
-                if(m_selectables[i]->testSelection(ray,m_mouseGlobalTX, m_cam)){
-                    handleNo = m_LMESolver->addHandle(m_selectables[i]->getID(),m_importedMesh->getMeshPtr());
-                    m_curSelectedHandle->m_handles.push_back(handleNo);
-                    m_selectables[i]->isSelectable(false);
-                }
-            }
-          }
+        }
+
       }
       else{
         m_origX = _event->x();
